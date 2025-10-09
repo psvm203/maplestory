@@ -2,6 +2,7 @@
 name = "maplestory"
 version = "0.1.0"
 edition = "2024"
+description = "maplestory"
 license = "MIT"
 
 [dependencies]
