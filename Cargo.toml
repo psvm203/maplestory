@@ -3,6 +3,7 @@ name = "maplestory"
 version = "0.1.0"
 edition = "2024"
 description = "maplestory"
+repository = "https://github.com/psvm203/maplestory"
 license = "MIT"
 
 [dependencies]
