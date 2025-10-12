@@ -1,6 +1,6 @@
 [package]
 name = "maplestory"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "maplestory"
 repository = "https://github.com/psvm203/maplestory"
