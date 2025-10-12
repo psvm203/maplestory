@@ -4,11 +4,11 @@ use serde::Deserialize;
 pub struct PotentialHistory {
     pub count: i64,
     pub next_cursor: Option<String>,
-    pub potential_history: Vec<CubeHistoryElement>,
+    pub potential_history: Vec<PotentialHistoryElement>,
 }
 
 #[derive(Debug, Deserialize)]
-pub struct CubeHistoryElement {
+pub struct PotentialHistoryElement {
     pub id: String,
     pub character_name: String,
     pub date_create: String,
