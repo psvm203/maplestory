@@ -1,0 +1,253 @@
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct CharacterItemEquipment {
+    pub date: Option<String>,
+    pub character_gender: String,
+    pub character_class: String,
+    pub preset_no: i64,
+    pub item_equipment: Vec<ItemEquipment>,
+    pub item_equipment_preset_1: Vec<ItemEquipment>,
+    pub item_equipment_preset_2: Vec<ItemEquipment>,
+    pub item_equipment_preset_3: Vec<ItemEquipment>,
+    pub title: Title,
+    pub medal_shape: MedalShape,
+    pub dragon_equipment: Vec<DragonEquipment>,
+    pub mechanic_equipment: Vec<MechanicEquipment>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemEquipment {
+    pub item_equipment_part: String,
+    pub item_equipment_slot: String,
+    pub item_name: String,
+    pub item_icon: String,
+    pub item_description: Option<String>,
+    pub item_shape_name: String,
+    pub item_shape_icon: String,
+    pub item_gender: Option<String>,
+    pub item_total_option: ItemTotalOption,
+    pub item_base_option: ItemBaseOption,
+    pub potential_option_grade: Option<String>,
+    pub additional_potential_option_grade: Option<String>,
+    pub potential_option_flag: String,
+    pub potential_option_1: Option<String>,
+    pub potential_option_2: Option<String>,
+    pub potential_option_3: Option<String>,
+    pub additional_potential_option_flag: String,
+    pub additional_potential_option_1: Option<String>,
+    pub additional_potential_option_2: Option<String>,
+    pub additional_potential_option_3: Option<String>,
+    pub equipment_level_increase: i64,
+    pub item_exceptional_option: ItemExceptionalOption,
+    pub item_add_option: ItemAddOption,
+    pub growth_exp: i64,
+    pub growth_level: i64,
+    pub scroll_upgrade: String,
+    pub cuttable_count: String,
+    pub golden_hammer_flag: String,
+    pub scroll_resilience_count: String,
+    pub scroll_upgradeable_count: String,
+    pub soul_name: Option<String>,
+    pub soul_option: Option<String>,
+    pub item_etc_option: ItemEtcOption,
+    pub starforce: String,
+    pub starforce_scroll_flag: String,
+    pub item_starforce_option: ItemStarforceOption,
+    pub special_ring_level: i64,
+    pub date_expire: Option<String>,
+    pub freestyle_flag: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemTotalOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub armor: String,
+    pub speed: String,
+    pub jump: String,
+    pub boss_damage: String,
+    pub ignore_monster_armor: String,
+    pub all_stat: String,
+    pub damage: String,
+    pub equipment_level_decrease: i64,
+    pub max_hp_rate: String,
+    pub max_mp_rate: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemBaseOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub armor: String,
+    pub speed: String,
+    pub jump: String,
+    pub boss_damage: String,
+    pub ignore_monster_armor: String,
+    pub all_stat: String,
+    pub max_hp_rate: String,
+    pub max_mp_rate: String,
+    pub base_equipment_level: i64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemExceptionalOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub exceptional_upgrade: i64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemAddOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub armor: String,
+    pub speed: String,
+    pub jump: String,
+    pub boss_damage: String,
+    pub damage: String,
+    pub all_stat: String,
+    pub equipment_level_decrease: i64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemEtcOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub armor: String,
+    pub speed: String,
+    pub jump: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ItemStarforceOption {
+    pub str: String,
+    pub dex: String,
+    pub int: String,
+    pub luk: String,
+    pub max_hp: String,
+    pub max_mp: String,
+    pub attack_power: String,
+    pub magic_power: String,
+    pub armor: String,
+    pub speed: String,
+    pub jump: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Title {
+    pub title_name: String,
+    pub title_icon: String,
+    pub title_description: String,
+    pub date_expire: Option<String>,
+    pub date_option_expire: String,
+    pub title_shape_name: Option<String>,
+    pub title_shape_icon: Option<String>,
+    pub title_shape_description: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct MedalShape {
+    pub medal_shape_name: String,
+    pub medal_shape_icon: String,
+    pub medal_shape_description: String,
+    pub medal_shape_changed_name: String,
+    pub medal_shape_changed_icon: String,
+    pub medal_shape_changed_description: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DragonEquipment {
+    pub item_equipment_part: String,
+    pub item_equipment_slot: String,
+    pub item_name: String,
+    pub item_icon: String,
+    pub item_description: Option<String>,
+    pub item_shape_name: String,
+    pub item_shape_icon: String,
+    pub item_gender: Option<String>,
+    pub item_total_option: ItemTotalOption,
+    pub item_base_option: ItemBaseOption,
+    pub equipment_level_increase: i64,
+    pub item_exceptional_option: ItemExceptionalOption,
+    pub item_add_option: ItemAddOption,
+    pub growth_exp: i64,
+    pub growth_level: i64,
+    pub scroll_upgrade: String,
+    pub cuttable_count: String,
+    pub golden_hammer_flag: String,
+    pub scroll_resilience_count: String,
+    pub scroll_upgradeable_count: String,
+    pub soul_name: Option<String>,
+    pub soul_option: Option<String>,
+    pub item_etc_option: ItemEtcOption,
+    pub starforce: String,
+    pub starforce_scroll_flag: String,
+    pub item_starforce_option: ItemStarforceOption,
+    pub special_ring_level: i64,
+    pub date_expire: Option<String>,
+    pub freestyle_flag: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct MechanicEquipment {
+    pub item_equipment_part: String,
+    pub item_equipment_slot: String,
+    pub item_name: String,
+    pub item_icon: String,
+    pub item_description: Option<String>,
+    pub item_shape_name: String,
+    pub item_shape_icon: String,
+    pub item_gender: Option<String>,
+    pub item_total_option: ItemTotalOption,
+    pub item_base_option: ItemBaseOption,
+    pub equipment_level_increase: i64,
+    pub item_exceptional_option: ItemExceptionalOption,
+    pub item_add_option: ItemAddOption,
+    pub growth_exp: i64,
+    pub growth_level: i64,
+    pub scroll_upgrade: String,
+    pub cuttable_count: String,
+    pub golden_hammer_flag: String,
+    pub scroll_resilience_count: String,
+    pub scroll_upgradeable_count: String,
+    pub soul_name: Option<String>,
+    pub soul_option: Option<String>,
+    pub item_etc_option: ItemEtcOption,
+    pub starforce: String,
+    pub starforce_scroll_flag: String,
+    pub item_starforce_option: ItemStarforceOption,
+    pub special_ring_level: i64,
+    pub date_expire: Option<String>,
+    pub freestyle_flag: String,
+}

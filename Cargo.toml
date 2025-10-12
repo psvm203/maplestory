@@ -7,3 +7,4 @@ repository = "https://github.com/psvm203/maplestory"
 license = "MIT"
 
 [dependencies]
+serde = { version = "1.0.228", features = ["derive"] }

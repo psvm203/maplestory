@@ -1,0 +1,18 @@
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct Achievement {
+    pub account_list: Vec<AccountList>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AccountList {
+    pub account_id: String,
+    pub achievement_achieve: Vec<AchievementAchieve>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AchievementAchieve {
+    pub achievement_name: String,
+    pub achievement_description: String,
+}
