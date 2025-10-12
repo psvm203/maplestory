@@ -6,7 +6,7 @@ pub enum Region {
 }
 
 pub struct MaplestoryApi {
-    region: Region,
+    pub region: Region,
     pub api_key: String,
     pub origin: String,
 }
