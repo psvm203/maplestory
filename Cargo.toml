@@ -4,7 +4,7 @@ version = "0.1.2"
 edition = "2024"
 description = "maplestory"
 documentation = "https://docs.rs/maplestory"
-repository = "https://github.com/psvm203/maplestory"
+repository = "https://github.com/psvm203/maplestory-api"
 license = "MIT"
 
 [dependencies]
