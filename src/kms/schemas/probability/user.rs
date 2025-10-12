@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct User {
     pub ouid: String,
 }

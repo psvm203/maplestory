@@ -1,11 +1,11 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct EventNoticeList {
     pub event_notice: Vec<EventNotice>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct EventNotice {
     pub title: String,
     pub url: String,

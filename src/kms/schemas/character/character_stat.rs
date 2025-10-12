@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterStat {
     pub date: Option<String>,
     pub character_class: String,
@@ -8,7 +8,7 @@ pub struct CharacterStat {
     pub remain_ap: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct FinalStat {
     pub stat_name: String,
     pub stat_value: String,

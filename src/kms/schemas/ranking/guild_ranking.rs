@@ -1,11 +1,11 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct GuildRanking {
     pub ranking: Vec<Ranking>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct Ranking {
     pub date: String,
     pub world_name: String,

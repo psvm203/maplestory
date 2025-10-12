@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterAndroidEquipment {
     pub date: Option<String>,
     pub android_name: Option<String>,
@@ -22,7 +22,7 @@ pub struct CharacterAndroidEquipment {
     pub android_preset_3: Option<AndroidPreset>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct AndroidHair {
     pub hair_name: Option<String>,
     pub base_color: Option<String>,
@@ -31,7 +31,7 @@ pub struct AndroidHair {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct AndroidFace {
     pub face_name: Option<String>,
     pub base_color: Option<String>,
@@ -40,7 +40,7 @@ pub struct AndroidFace {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct AndroidSkin {
     pub skin_name: String,
     pub color_style: Option<String>,
@@ -49,7 +49,7 @@ pub struct AndroidSkin {
     pub brightness: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct AndroidCashItemEquipment {
     pub cash_item_equipment_part: String,
     pub cash_item_equipment_slot: String,
@@ -65,7 +65,7 @@ pub struct AndroidCashItemEquipment {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct AndroidPreset {
     pub android_name: String,
     pub android_nickname: String,
@@ -81,13 +81,13 @@ pub struct AndroidPreset {
     pub android_shop_usable_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CashItemOption {
     pub option_type: String,
     pub option_value: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CashItemColoringPrism {
     pub color_range: String,
     pub hue: i64,

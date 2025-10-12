@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionArtifact {
     pub date: Option<String>,
     pub union_artifact_effect: Vec<UnionArtifactEffect>,
@@ -8,7 +8,7 @@ pub struct UnionArtifact {
     pub union_artifact_remain_ap: Option<i64>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionArtifactCrystal {
     pub name: String,
     pub validity_flag: String,
@@ -19,7 +19,7 @@ pub struct UnionArtifactCrystal {
     pub crystal_option_name_3: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionArtifactEffect {
     pub name: String,
     pub level: i64,

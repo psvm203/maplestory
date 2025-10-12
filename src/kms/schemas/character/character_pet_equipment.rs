@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterPetEquipment {
     pub date: Option<String>,
     pub pet_1_name: Option<String>,
@@ -38,7 +38,7 @@ pub struct CharacterPetEquipment {
     pub pet_3_appearance_icon: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct PetEquipment {
     pub item_name: Option<String>,
     pub item_icon: Option<String>,
@@ -50,13 +50,13 @@ pub struct PetEquipment {
     pub item_shape_icon: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemOption {
     pub option_type: String,
     pub option_value: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct PetAutoSkill {
     pub skill_1: Option<String>,
     pub skill_1_icon: Option<String>,

@@ -1,11 +1,11 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct TheSeedRanking {
     pub ranking: Vec<Ranking>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct Ranking {
     pub date: String,
     pub ranking: i64,

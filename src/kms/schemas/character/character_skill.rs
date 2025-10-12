@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterSkill {
     pub date: Option<String>,
     pub character_class: String,
@@ -8,7 +8,7 @@ pub struct CharacterSkill {
     pub character_skill: Vec<CharacterSkillElement>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterSkillElement {
     pub skill_name: String,
     pub skill_description: String,

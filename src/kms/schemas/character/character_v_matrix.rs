@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterVMatrix {
     pub date: Option<String>,
     pub character_class: Option<String>,
@@ -8,7 +8,7 @@ pub struct CharacterVMatrix {
     pub character_v_matrix_remain_slot_upgrade_point: Option<i64>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterVCoreEquipment {
     pub slot_id: String,
     pub slot_level: i64,

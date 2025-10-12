@@ -1,13 +1,13 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterSymbolEquipment {
     pub date: Option<String>,
     pub character_class: String,
     pub symbol: Vec<Symbol>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct Symbol {
     pub symbol_name: String,
     pub symbol_icon: String,

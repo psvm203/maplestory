@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct GuildBasic {
     pub date: Option<String>,
     pub world_name: String,
@@ -15,7 +15,7 @@ pub struct GuildBasic {
     pub guild_noblesse_skill: Vec<GuildSkill>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct GuildSkill {
     pub skill_name: String,
     pub skill_description: String,

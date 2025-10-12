@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterCashItemEquipment {
     pub date: Option<String>,
     pub character_gender: String,
@@ -17,7 +17,7 @@ pub struct CharacterCashItemEquipment {
     pub additional_cash_item_equipment_preset_3: Vec<CashItemEquipment>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CashItemEquipment {
     pub cash_item_equipment_part: String,
     pub cash_item_equipment_slot: String,
@@ -34,7 +34,7 @@ pub struct CashItemEquipment {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CashItemColoringPrism {
     pub color_range: String,
     pub hue: i64,
@@ -42,7 +42,7 @@ pub struct CashItemColoringPrism {
     pub value: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CashItemOption {
     pub option_type: String,
     pub option_value: String,

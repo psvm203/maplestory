@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterItemEquipment {
     pub date: Option<String>,
     pub character_gender: String,
@@ -16,7 +16,7 @@ pub struct CharacterItemEquipment {
     pub mechanic_equipment: Vec<MechanicEquipment>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemEquipment {
     pub item_equipment_part: String,
     pub item_equipment_slot: String,
@@ -59,7 +59,7 @@ pub struct ItemEquipment {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemTotalOption {
     pub str: String,
     pub dex: String,
@@ -81,7 +81,7 @@ pub struct ItemTotalOption {
     pub max_mp_rate: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemBaseOption {
     pub str: String,
     pub dex: String,
@@ -102,7 +102,7 @@ pub struct ItemBaseOption {
     pub base_equipment_level: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemExceptionalOption {
     pub str: String,
     pub dex: String,
@@ -115,7 +115,7 @@ pub struct ItemExceptionalOption {
     pub exceptional_upgrade: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemAddOption {
     pub str: String,
     pub dex: String,
@@ -134,7 +134,7 @@ pub struct ItemAddOption {
     pub equipment_level_decrease: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemEtcOption {
     pub str: String,
     pub dex: String,
@@ -149,7 +149,7 @@ pub struct ItemEtcOption {
     pub jump: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct ItemStarforceOption {
     pub str: String,
     pub dex: String,
@@ -164,7 +164,7 @@ pub struct ItemStarforceOption {
     pub jump: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct Title {
     pub title_name: String,
     pub title_icon: String,
@@ -176,7 +176,7 @@ pub struct Title {
     pub title_shape_description: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct MedalShape {
     pub medal_shape_name: String,
     pub medal_shape_icon: String,
@@ -186,7 +186,7 @@ pub struct MedalShape {
     pub medal_shape_changed_description: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct DragonEquipment {
     pub item_equipment_part: String,
     pub item_equipment_slot: String,
@@ -219,7 +219,7 @@ pub struct DragonEquipment {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct MechanicEquipment {
     pub item_equipment_part: String,
     pub item_equipment_slot: String,

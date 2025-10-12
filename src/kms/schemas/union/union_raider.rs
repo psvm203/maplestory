@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionRaider {
     pub date: Option<String>,
     pub union_raider_stat: Vec<String>,
@@ -15,7 +15,7 @@ pub struct UnionRaider {
     pub union_raider_preset_5: Option<UnionRaiderPreset>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionBlock {
     pub block_type: String,
     pub block_class: String,
@@ -24,13 +24,13 @@ pub struct UnionBlock {
     pub block_position: Vec<Block>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionInnerStat {
     pub stat_field_id: String,
     pub stat_field_effect: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct UnionRaiderPreset {
     pub union_raider_stat: Vec<String>,
     pub union_occupied_stat: Vec<String>,
@@ -38,7 +38,7 @@ pub struct UnionRaiderPreset {
     pub union_inner_stat: Vec<UnionInnerStat>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct Block {
     pub x: i64,
     pub y: i64,

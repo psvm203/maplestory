@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterBeautyEquipment {
     pub date: Option<String>,
     pub character_gender: String,
@@ -13,7 +13,7 @@ pub struct CharacterBeautyEquipment {
     pub additional_character_skin: Option<CharacterSkin>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterHair {
     pub hair_name: String,
     pub base_color: String,
@@ -22,7 +22,7 @@ pub struct CharacterHair {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterFace {
     pub face_name: String,
     pub base_color: String,
@@ -31,7 +31,7 @@ pub struct CharacterFace {
     pub freestyle_flag: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterSkin {
     pub skin_name: String,
     pub color_style: Option<String>,

@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CharacterHyperStat {
     pub date: Option<String>,
     pub character_class: String,
@@ -14,7 +14,7 @@ pub struct CharacterHyperStat {
     pub hyper_stat_preset_3_remain_point: i64,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct HyperStatPreset {
     pub stat_type: String,
     pub stat_point: Option<i64>,

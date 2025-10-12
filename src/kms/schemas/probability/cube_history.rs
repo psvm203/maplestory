@@ -1,13 +1,13 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CubeHistory {
     pub count: i64,
     pub next_cursor: Option<String>,
     pub cube_history: Vec<CubeHistoryElement>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct CubeHistoryElement {
     pub id: String,
     pub character_name: String,
@@ -28,7 +28,7 @@ pub struct CubeHistoryElement {
     pub after_additional_potential_option: Vec<PotentialOption>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct PotentialOption {
     pub value: String,
     pub grade: String,

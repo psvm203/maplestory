@@ -1,13 +1,13 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct StarforceHistory {
     pub count: i64,
     pub next_cursor: Option<String>,
     pub starforce_history: Vec<StarforceHistoryElement>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct StarforceHistoryElement {
     pub id: String,
     pub item_upgrade_result: String,
@@ -28,7 +28,7 @@ pub struct StarforceHistoryElement {
     pub date_create: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize)]
 pub struct StarforceEventList {
     pub success_rate: Option<String>,
     pub destroy_decrease_rate: Option<String>,
