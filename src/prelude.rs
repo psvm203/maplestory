@@ -1,1 +1,1 @@
-pub use crate::api::{Api, ApiBuilder, Region};
+pub use crate::api::{MaplestoryApi, MaplestoryApiBuilder, Region};

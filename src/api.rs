@@ -3,34 +3,34 @@ pub enum Region {
     MSEA,
 }
 
-pub struct Api {
-    api_key: String,
+pub struct MaplestoryApi {
     region: Region,
+    api_key: String,
     origin: String,
 }
 
-pub struct ApiBuilder {
-    api_key: Option<String>,
+pub struct MaplestoryApiBuilder {
     region: Option<Region>,
+    api_key: Option<String>,
     origin: Option<String>,
 }
 
-impl ApiBuilder {
+impl MaplestoryApiBuilder {
     pub fn new() -> Self {
         Self {
-            api_key: None,
             region: None,
+            api_key: None,
             origin: None,
         }
     }
 
-    pub fn api_key<S: Into<String>>(mut self, api_key: S) -> Self {
-        self.api_key = Some(api_key.into());
+    pub fn region(mut self, region: Region) -> Self {
+        self.region = Some(region);
         self
     }
 
-    pub fn region(mut self, region: Region) -> Self {
-        self.region = Some(region);
+    pub fn api_key<S: Into<String>>(mut self, api_key: S) -> Self {
+        self.api_key = Some(api_key.into());
         self
     }
 
@@ -39,25 +39,25 @@ impl ApiBuilder {
         self
     }
 
-    pub fn build(self) -> Result<Api, &'static str> {
-        let api_key = self.api_key.ok_or("api_key is required")?;
-
+    pub fn build(self) -> Result<MaplestoryApi, &'static str> {
         let region = self.region.unwrap_or(Region::KMS);
+
+        let api_key = self.api_key.ok_or("api_key is required")?;
 
         let origin = self
             .origin
             .unwrap_or_else(|| "https://open.api.nexon.com".to_owned());
 
-        Ok(Api {
-            api_key,
+        Ok(MaplestoryApi {
             region,
+            api_key,
             origin,
         })
     }
 }
 
-impl Api {
-    pub fn builder() -> ApiBuilder {
-        ApiBuilder::new()
+impl MaplestoryApi {
+    pub fn builder() -> MaplestoryApiBuilder {
+        MaplestoryApiBuilder::new()
     }
 }
