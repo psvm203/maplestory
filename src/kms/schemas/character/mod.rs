@@ -1,4 +1,5 @@
 pub mod achievement;
+#[allow(clippy::module_inception)]
 pub mod character;
 pub mod character_ability;
 pub mod character_android_equipment;
