@@ -1,3 +1,5 @@
+use crate::kms;
+
 pub enum Region {
     KMS,
     MSEA,
@@ -5,14 +7,24 @@ pub enum Region {
 
 pub struct MaplestoryApi {
     region: Region,
-    api_key: String,
-    origin: String,
+    pub api_key: String,
+    pub origin: String,
+}
+
+impl MaplestoryApi {
+    pub fn builder() -> MaplestoryApiBuilder {
+        MaplestoryApiBuilder::new()
+    }
+
+    pub async fn get_character_list(&self) -> kms::character::character_list::CharacterList {
+        kms::api::get_character_list(self).await
+    }
 }
 
 pub struct MaplestoryApiBuilder {
-    region: Option<Region>,
-    api_key: Option<String>,
-    origin: Option<String>,
+    pub region: Option<Region>,
+    pub api_key: Option<String>,
+    pub origin: Option<String>,
 }
 
 impl MaplestoryApiBuilder {
@@ -53,11 +65,5 @@ impl MaplestoryApiBuilder {
             api_key,
             origin,
         })
-    }
-}
-
-impl MaplestoryApi {
-    pub fn builder() -> MaplestoryApiBuilder {
-        MaplestoryApiBuilder::new()
     }
 }

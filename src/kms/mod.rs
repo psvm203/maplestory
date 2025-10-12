@@ -1,3 +1,4 @@
+pub mod api;
 pub mod character;
 pub mod guild;
 pub mod notice;
