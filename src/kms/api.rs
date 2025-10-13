@@ -5,39 +5,47 @@ use crate::{
 
 const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 
-pub async fn get_character_list(api: &MaplestoryApi) -> character_list::CharacterList {
-    reqwest::Client::new()
-        .get(&format!("{}/maplestory/v1/character/list", &api.origin))
-        .header(API_KEY_HEADER_NAME, &api.api_key)
-        .send()
-        .await
-        .unwrap()
-        .json::<character_list::CharacterList>()
-        .await
-        .unwrap()
+pub trait Kms {
+    async fn get_character_list(&self) -> character_list::CharacterList;
+    async fn get_user_achievement(&self) -> achievement::Achievement;
+    async fn get_id(&self, character_name: String) -> character::Character;
 }
 
-pub async fn get_user_achievement(api: &MaplestoryApi) -> achievement::Achievement {
-    reqwest::Client::new()
-        .get(&format!("{}/maplestory/v1/id", &api.origin))
-        .header(API_KEY_HEADER_NAME, &api.api_key)
-        .send()
-        .await
-        .unwrap()
-        .json::<achievement::Achievement>()
-        .await
-        .unwrap()
-}
+impl Kms for MaplestoryApi {
+    async fn get_character_list(&self) -> character_list::CharacterList {
+        reqwest::Client::new()
+            .get(&format!("{}/maplestory/v1/character/list", &self.origin))
+            .header(API_KEY_HEADER_NAME, &self.api_key)
+            .send()
+            .await
+            .unwrap()
+            .json::<character_list::CharacterList>()
+            .await
+            .unwrap()
+    }
 
-pub async fn get_id(api: &MaplestoryApi, character_name: String) -> character::Character {
-    reqwest::Client::new()
-        .get(&format!("{}/maplestory/v1/id", &api.origin))
-        .header(API_KEY_HEADER_NAME, &api.api_key)
-        .query(&[("character_name", character_name)])
-        .send()
-        .await
-        .unwrap()
-        .json::<character::Character>()
-        .await
-        .unwrap()
+    async fn get_user_achievement(&self) -> achievement::Achievement {
+        reqwest::Client::new()
+            .get(&format!("{}/maplestory/v1/id", &self.origin))
+            .header(API_KEY_HEADER_NAME, &self.api_key)
+            .send()
+            .await
+            .unwrap()
+            .json::<achievement::Achievement>()
+            .await
+            .unwrap()
+    }
+
+    async fn get_id(&self, character_name: String) -> character::Character {
+        reqwest::Client::new()
+            .get(&format!("{}/maplestory/v1/id", &self.origin))
+            .header(API_KEY_HEADER_NAME, &self.api_key)
+            .query(&[("character_name", character_name)])
+            .send()
+            .await
+            .unwrap()
+            .json::<character::Character>()
+            .await
+            .unwrap()
+    }
 }
