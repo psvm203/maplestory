@@ -1,12 +1,13 @@
+use crate::error::ApiError;
 use serde::Deserialize;
 
-#[derive(Clone, Debug, Default, Deserialize)]
+#[derive(Deserialize)]
 pub struct ErrorMessage {
     pub error: Error,
 }
 
-#[derive(Clone, Debug, Default, Deserialize)]
+#[derive(Deserialize)]
 pub struct Error {
-    pub name: String,
+    pub name: ApiError,
     pub message: String,
 }
