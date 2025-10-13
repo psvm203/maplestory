@@ -25,6 +25,7 @@ pub mod character_symbol_equipment;
 pub mod character_v_matrix;
 pub mod cube_history;
 pub mod dojang_ranking;
+pub mod error_message;
 pub mod event_notice_detail;
 pub mod event_notice_list;
 pub mod guild;
