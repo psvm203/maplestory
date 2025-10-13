@@ -1,6 +1,6 @@
 use crate::{
     api::MaplestoryApi,
-    kms::character::{achievement, character, character_list},
+    schemas::character::{achievement, character, character_list},
 };
 
 const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";

@@ -1,4 +1,4 @@
-use crate::kms::{self, api::Kms};
+use crate::schemas::{self, api::Kms};
 
 pub enum Region {
     KMS,
@@ -16,18 +16,18 @@ impl MaplestoryApi {
         MaplestoryApiBuilder::new()
     }
 
-    pub async fn get_character_list(&self) -> kms::character::character_list::CharacterList {
+    pub async fn get_character_list(&self) -> schemas::character::character_list::CharacterList {
         Kms::get_character_list(self).await
     }
 
-    pub async fn get_user_achievement(&self) -> kms::character::achievement::Achievement {
+    pub async fn get_user_achievement(&self) -> schemas::character::achievement::Achievement {
         Kms::get_user_achievement(self).await
     }
 
     pub async fn get_id<S: Into<String>>(
         &self,
         character_name: S,
-    ) -> kms::character::character::Character {
+    ) -> schemas::character::character::Character {
         Kms::get_id(self, character_name.into()).await
     }
 }

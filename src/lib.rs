@@ -1,3 +1,3 @@
 pub mod api;
-pub mod kms;
+pub mod schemas;
 pub mod prelude;
