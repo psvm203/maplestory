@@ -2,7 +2,7 @@
 name = "maplestory"
 version = "0.1.4"
 edition = "2024"
-description = "easy-to-use maplestory API library"
+description = "easy-to-use maplestory API wrapper"
 documentation = "https://docs.rs/maplestory"
 repository = "https://github.com/psvm203/maplestory"
 license = "MIT"
