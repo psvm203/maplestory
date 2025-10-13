@@ -16,7 +16,6 @@ pub struct MaplestoryApi {
 }
 
 impl MaplestoryApi {
-    #[must_use]
     pub fn builder() -> MaplestoryApiBuilder {
         MaplestoryApiBuilder::new()
     }
@@ -44,7 +43,6 @@ pub struct MaplestoryApiBuilder {
 }
 
 impl MaplestoryApiBuilder {
-    #[must_use]
     pub const fn new() -> Self {
         Self {
             region: None,
