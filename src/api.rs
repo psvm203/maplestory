@@ -1,4 +1,7 @@
-use crate::schemas::{achievement, api::Kms, character, character_list};
+use crate::{
+    kms::Kms,
+    schemas::{achievement, character, character_list},
+};
 
 pub enum Region {
     KMS,

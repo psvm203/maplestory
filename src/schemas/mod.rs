@@ -1,6 +1,5 @@
 pub mod achievement;
 pub mod achievement_ranking;
-pub mod api;
 pub mod cashshop_notice_detail;
 pub mod cashshop_notice_list;
 pub mod character;
