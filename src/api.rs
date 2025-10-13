@@ -1,8 +1,12 @@
 use crate::{
     error::ApiError,
-    kms::Kms,
+    kms,
+    prelude::error_message::ErrorMessage,
     schemas::{achievement, character, character_list},
 };
+use serde::de::Deserialize;
+
+const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 
 pub enum Region {
     KMS,
@@ -20,19 +24,46 @@ impl MaplestoryApi {
         MaplestoryApiBuilder::new()
     }
 
+    pub(crate) async fn make_request<T>(
+        &self,
+        endpoint: &str,
+        query_params: Option<&[(&'static str, &str)]>,
+    ) -> Result<T, ApiError>
+    where
+        for<'de> T: Deserialize<'de>,
+    {
+        let mut request = reqwest::Client::new()
+            .get(format!("{}/maplestory/{endpoint}", &self.origin))
+            .header(API_KEY_HEADER_NAME, &self.api_key);
+
+        if let Some(params) = query_params {
+            request = request.query(params);
+        }
+
+        let response = request.send().await.or(Err(ApiError::SendRequestError))?;
+
+        if response.status() != reqwest::StatusCode::OK {
+            return Err(response
+                .json::<ErrorMessage>()
+                .await
+                .or(Err(ApiError::ParseError))?
+                .error
+                .name);
+        }
+
+        response.json::<T>().await.or(Err(ApiError::ParseError))
+    }
+
     pub async fn get_character_list(&self) -> Result<character_list::CharacterList, ApiError> {
-        Kms::get_character_list(self).await
+        kms::get_character_list(self).await
     }
 
     pub async fn get_user_achievement(&self) -> Result<achievement::Achievement, ApiError> {
-        Kms::get_user_achievement(self).await
+        kms::get_user_achievement(self).await
     }
 
-    pub async fn get_id<S: Into<String>>(
-        &self,
-        character_name: S,
-    ) -> Result<character::Character, ApiError> {
-        Kms::get_id(self, character_name.into()).await
+    pub async fn get_id(&self, character_name: &str) -> Result<character::Character, ApiError> {
+        kms::get_id(self, character_name).await
     }
 }
 
