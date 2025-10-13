@@ -21,7 +21,7 @@ pub struct MaplestoryApi {
 
 impl MaplestoryApi {
     pub fn builder() -> MaplestoryApiBuilder {
-        MaplestoryApiBuilder::new()
+        MaplestoryApiBuilder::default()
     }
 
     pub(crate) async fn make_request<T>(
@@ -67,6 +67,7 @@ impl MaplestoryApi {
     }
 }
 
+#[derive(Default)]
 pub struct MaplestoryApiBuilder {
     pub region: Option<Region>,
     pub api_key: Option<String>,
