@@ -22,4 +22,6 @@ pub enum ApiError {
     GameUnderMaintenance,
     #[serde(rename = "OPENAPI00011")]
     ApiUnderMaintenance,
+    SendRequestError,
+    ParseError,
 }

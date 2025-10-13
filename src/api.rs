@@ -1,4 +1,5 @@
 use crate::{
+    error::ApiError,
     kms::Kms,
     schemas::{achievement, character, character_list},
 };
@@ -15,19 +16,23 @@ pub struct MaplestoryApi {
 }
 
 impl MaplestoryApi {
+    #[must_use]
     pub fn builder() -> MaplestoryApiBuilder {
         MaplestoryApiBuilder::new()
     }
 
-    pub async fn get_character_list(&self) -> character_list::CharacterList {
+    pub async fn get_character_list(&self) -> Result<character_list::CharacterList, ApiError> {
         Kms::get_character_list(self).await
     }
 
-    pub async fn get_user_achievement(&self) -> achievement::Achievement {
+    pub async fn get_user_achievement(&self) -> Result<achievement::Achievement, ApiError> {
         Kms::get_user_achievement(self).await
     }
 
-    pub async fn get_id<S: Into<String>>(&self, character_name: S) -> character::Character {
+    pub async fn get_id<S: Into<String>>(
+        &self,
+        character_name: S,
+    ) -> Result<character::Character, ApiError> {
         Kms::get_id(self, character_name.into()).await
     }
 }
@@ -39,7 +44,8 @@ pub struct MaplestoryApiBuilder {
 }
 
 impl MaplestoryApiBuilder {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {
             region: None,
             api_key: None,
@@ -47,7 +53,7 @@ impl MaplestoryApiBuilder {
         }
     }
 
-    pub fn region(mut self, region: Region) -> Self {
+    pub const fn region(mut self, region: Region) -> Self {
         self.region = Some(region);
         self
     }

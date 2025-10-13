@@ -1,51 +1,86 @@
 use crate::{
     api::MaplestoryApi,
+    error::ApiError,
+    prelude::error_message::ErrorMessage,
     schemas::{achievement, character, character_list},
 };
 
 const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 
 pub trait Kms {
-    async fn get_character_list(&self) -> character_list::CharacterList;
-    async fn get_user_achievement(&self) -> achievement::Achievement;
-    async fn get_id(&self, character_name: String) -> character::Character;
+    async fn get_character_list(&self) -> Result<character_list::CharacterList, ApiError>;
+    async fn get_user_achievement(&self) -> Result<achievement::Achievement, ApiError>;
+    async fn get_id(&self, character_name: String) -> Result<character::Character, ApiError>;
 }
 
 impl Kms for MaplestoryApi {
-    async fn get_character_list(&self) -> character_list::CharacterList {
-        reqwest::Client::new()
-            .get(&format!("{}/maplestory/v1/character/list", &self.origin))
+    async fn get_character_list(&self) -> Result<character_list::CharacterList, ApiError> {
+        let response = reqwest::Client::new()
+            .get(format!("{}/maplestory/v1/character/list", &self.origin))
             .header(API_KEY_HEADER_NAME, &self.api_key)
             .send()
             .await
-            .unwrap()
+            .or(Err(ApiError::SendRequestError))?;
+
+        if response.status() != reqwest::StatusCode::OK {
+            return Err(response
+                .json::<ErrorMessage>()
+                .await
+                .or(Err(ApiError::ParseError))?
+                .error
+                .name);
+        }
+
+        response
             .json::<character_list::CharacterList>()
             .await
-            .unwrap()
+            .or(Err(ApiError::ParseError))
     }
 
-    async fn get_user_achievement(&self) -> achievement::Achievement {
-        reqwest::Client::new()
-            .get(&format!("{}/maplestory/v1/id", &self.origin))
+    async fn get_user_achievement(&self) -> Result<achievement::Achievement, ApiError> {
+        let response = reqwest::Client::new()
+            .get(format!("{}/maplestory/v1/id", &self.origin))
             .header(API_KEY_HEADER_NAME, &self.api_key)
             .send()
             .await
-            .unwrap()
+            .or(Err(ApiError::SendRequestError))?;
+
+        if response.status() != reqwest::StatusCode::OK {
+            return Err(response
+                .json::<ErrorMessage>()
+                .await
+                .or(Err(ApiError::ParseError))?
+                .error
+                .name);
+        }
+
+        response
             .json::<achievement::Achievement>()
             .await
-            .unwrap()
+            .or(Err(ApiError::ParseError))
     }
 
-    async fn get_id(&self, character_name: String) -> character::Character {
-        reqwest::Client::new()
+    async fn get_id(&self, character_name: String) -> Result<character::Character, ApiError> {
+        let response = reqwest::Client::new()
             .get(&format!("{}/maplestory/v1/id", &self.origin))
             .header(API_KEY_HEADER_NAME, &self.api_key)
             .query(&[("character_name", character_name)])
             .send()
             .await
-            .unwrap()
+            .or(Err(ApiError::SendRequestError))?;
+
+        if response.status() != reqwest::StatusCode::OK {
+            return Err(response
+                .json::<ErrorMessage>()
+                .await
+                .or(Err(ApiError::ParseError))?
+                .error
+                .name);
+        }
+
+        response
             .json::<character::Character>()
             .await
-            .unwrap()
+            .or(Err(ApiError::ParseError))
     }
 }
