@@ -446,12 +446,8 @@ pub struct MaplestoryApiBuilder {
 }
 
 impl MaplestoryApiBuilder {
-    pub const fn new() -> Self {
-        Self {
-            region: None,
-            api_key: None,
-            origin: None,
-        }
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub const fn region(mut self, region: Region) -> Self {
