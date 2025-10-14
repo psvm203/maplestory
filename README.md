@@ -97,9 +97,9 @@ struct CharacterBasic {
 }
 ```
 
-When user does not provide the optional date parameter, the `date` field becomes null.
+When user does not provide optional date parameter, `date` field becomes null.
 
-When character not joined to a guild, the `character_guild_name` field becomes null.
+When character not joined to a guild, `character_guild_name` field becomes null.
 
 Other fields are not null in any case.
 
