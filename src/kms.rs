@@ -16,7 +16,7 @@ use crate::{
         character_popularity::CharacterPopularity, character_propensity::CharacterPropensity,
         character_set_effect::CharacterSetEffect, character_skill::CharacterSkill,
         character_stat::CharacterStat, character_symbol_equipment::CharacterSymbolEquipment,
-        character_v_matrix::CharacterVMatrix,
+        character_v_matrix::CharacterVMatrix, guild::Guild, guild_basic::GuildBasic,
         ring_exchange_skill_equipment::RingExchangeSkillEquipment, union::Union,
         union_artifact::UnionArtifact, union_champion::UnionChampion, union_raider::UnionRaider,
     },
@@ -258,5 +258,23 @@ pub async fn get_user_union_champion(
     date: Option<&str>,
 ) -> Result<UnionChampion, ApiError> {
     api.make_request("v1/user/union-champion", params!(ocid, date))
+        .await
+}
+
+pub async fn get_guild_id(
+    api: &MaplestoryApi,
+    guild_name: &str,
+    world_name: &str,
+) -> Result<Guild, ApiError> {
+    api.make_request("v1/guild/id", params!(guild_name, world_name))
+        .await
+}
+
+pub async fn get_guild_basic(
+    api: &MaplestoryApi,
+    oguild_id: &str,
+    date: Option<&str>,
+) -> Result<GuildBasic, ApiError> {
+    api.make_request("v1/guild/basic", params!(oguild_id, date))
         .await
 }
