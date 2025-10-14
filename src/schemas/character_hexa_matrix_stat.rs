@@ -1,7 +1,7 @@
 use serde::Deserialize;
 
 #[derive(Clone, Debug, Default, Deserialize)]
-pub struct CharacterHexaMetrixStat {
+pub struct CharacterHexaMatrixStat {
     pub date: Option<String>,
     pub character_class: Option<String>,
     pub character_hexa_stat_core: Vec<HexaStatCore>,
