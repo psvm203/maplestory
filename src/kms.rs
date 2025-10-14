@@ -4,7 +4,8 @@ use crate::{
     macros::Param,
     params,
     schemas::{
-        achievement::Achievement, character::Character, character_ability::CharacterAbility,
+        achievement::Achievement, achievement_ranking::AchievementRanking, character::Character,
+        character_ability::CharacterAbility,
         character_android_equipment::CharacterAndroidEquipment, character_basic::CharacterBasic,
         character_beauty_equipment::CharacterBeautyEquipment,
         character_cash_item_equipment::CharacterCashItemEquipment,
@@ -16,11 +17,14 @@ use crate::{
         character_popularity::CharacterPopularity, character_propensity::CharacterPropensity,
         character_set_effect::CharacterSetEffect, character_skill::CharacterSkill,
         character_stat::CharacterStat, character_symbol_equipment::CharacterSymbolEquipment,
-        character_v_matrix::CharacterVMatrix, cube_history::CubeHistory, guild::Guild,
-        guild_basic::GuildBasic, potential_history::PotentialHistory,
+        character_v_matrix::CharacterVMatrix, cube_history::CubeHistory,
+        dojang_ranking::DojangRanking, guild::Guild, guild_basic::GuildBasic,
+        guild_ranking::GuildRanking, overall_ranking::OverallRanking,
+        potential_history::PotentialHistory,
         ring_exchange_skill_equipment::RingExchangeSkillEquipment,
-        starforce_history::StarforceHistory, union::Union, union_artifact::UnionArtifact,
-        union_champion::UnionChampion, union_raider::UnionRaider, user::User,
+        starforce_history::StarforceHistory, the_seed_ranking::TheSeedRanking, union::Union,
+        union_artifact::UnionArtifact, union_champion::UnionChampion, union_raider::UnionRaider,
+        union_ranking::UnionRanking, user::User,
     },
 };
 
@@ -312,5 +316,84 @@ pub async fn get_history_cube(
     cursor: Option<&str>,
 ) -> Result<CubeHistory, ApiError> {
     api.make_request("v1/history/cube", params!(count, date, cursor))
+        .await
+}
+
+pub async fn get_ranking_overall(
+    api: &MaplestoryApi,
+    date: &str,
+    world_name: Option<&str>,
+    world_type: Option<&str>,
+    class: Option<&str>,
+    ocid: Option<&str>,
+    page: Option<&str>,
+) -> Result<OverallRanking, ApiError> {
+    api.make_request(
+        "v1/ranking/overall",
+        params!(date, world_name, world_type, class, ocid, page),
+    )
+    .await
+}
+
+pub async fn get_ranking_union(
+    api: &MaplestoryApi,
+    date: &str,
+    world_name: Option<&str>,
+    ocid: Option<&str>,
+    page: Option<&str>,
+) -> Result<UnionRanking, ApiError> {
+    api.make_request("v1/ranking/union", params!(date, world_name, ocid, page))
+        .await
+}
+
+pub async fn get_ranking_guild(
+    api: &MaplestoryApi,
+    date: &str,
+    world_name: Option<&str>,
+    ranking_type: &str,
+    guild_name: Option<&str>,
+    page: Option<&str>,
+) -> Result<GuildRanking, ApiError> {
+    api.make_request(
+        "v1/ranking/guild",
+        params!(date, world_name, ranking_type, guild_name, page),
+    )
+    .await
+}
+
+pub async fn get_ranking_dojang(
+    api: &MaplestoryApi,
+    date: &str,
+    world_name: Option<&str>,
+    difficulty: &str,
+    class: Option<&str>,
+    ocid: Option<&str>,
+    page: Option<&str>,
+) -> Result<DojangRanking, ApiError> {
+    api.make_request(
+        "v1/ranking/dojang",
+        params!(date, world_name, difficulty, class, ocid, page),
+    )
+    .await
+}
+
+pub async fn get_ranking_theseed(
+    api: &MaplestoryApi,
+    date: &str,
+    world_name: Option<&str>,
+    ocid: Option<&str>,
+    page: Option<&str>,
+) -> Result<TheSeedRanking, ApiError> {
+    api.make_request("v1/ranking/theseed", params!(date, world_name, ocid, page))
+        .await
+}
+
+pub async fn get_ranking_achievement(
+    api: &MaplestoryApi,
+    date: &str,
+    ocid: Option<&str>,
+    page: Option<&str>,
+) -> Result<AchievementRanking, ApiError> {
+    api.make_request("v1/ranking/achievement", params!(date, ocid, page))
         .await
 }
