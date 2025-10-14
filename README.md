@@ -16,7 +16,7 @@ Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported on
 
 You can use other asynchronous crates, however, in this async example, we will use [Tokio](https://tokio.rs/).
 
-```sh
+```console
 cargo add maplestory
 cargo add tokio --features full
 ```
@@ -24,13 +24,14 @@ cargo add tokio --features full
 So your `Cargo.toml` would look like:
 
 ```toml
+[dependencies]
 maplestory = { version = "1.0.0" }
 tokio = { version = "1.48.0", features = ["full"] }
 ```
 
 Then, on your `main.rs`,
 
-```Rust
+```rust
 use maplestory::prelude::*;
 
 #[tokio::main]
@@ -52,7 +53,7 @@ async fn main() {
 This example prints 281, my character level (which has probably increased since I wrote this README).
 
 ## Description
-```Rust
+```rust
 struct MaplestoryApi {
     region: Region,
     api_key: String,
@@ -77,7 +78,7 @@ In such cases, please report them through [issues](https://github.com/psvm203/ne
 
 For example, the structure of the `CharacterBasic` schema is as follows:
 
-```Rust
+```rust
 struct CharacterBasic {
     date: Option<String>,
     character_name: String,
