@@ -64,7 +64,7 @@ struct MaplestoryApi {
 `MaplestoryApi` consists of 3 fields:
 - `region`: Represents the region such as KMS, MSEA. Default is KMS.
 - `api_key`: Can be obtained from https://openapi.nexon.com/.
-- `origin`: Default is https://open.api.nexon.com/. Or you can specify any proxy server. For an example, visit [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
+- `origin`: Default is "https://open.api.nexon.com". Or, you can specify any proxy server. For an example, visit [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
 
 For schema descriptions, please refer to [KMS docs](https://openapi.nexon.com/en/game/maplestory/) or [MSEA docs](https://openapi.nexon.com/en/game/maplestorysea/).
 When the official documentation differs from the actual API response structure, schemas are based on the actual API responses.
