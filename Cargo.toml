@@ -1,6 +1,6 @@
 [package]
 name = "maplestory"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "easy-to-use maplestory API wrapper"
 documentation = "https://docs.rs/maplestory"
