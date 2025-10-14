@@ -48,6 +48,7 @@ async fn main() {
 ```
 
 ![level](./assets/level.png)
+
 This example prints 281, my character level (which has probably increased since I wrote this README).
 
 ## Description
