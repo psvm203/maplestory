@@ -16,9 +16,11 @@ use crate::{
         character_popularity::CharacterPopularity, character_propensity::CharacterPropensity,
         character_set_effect::CharacterSetEffect, character_skill::CharacterSkill,
         character_stat::CharacterStat, character_symbol_equipment::CharacterSymbolEquipment,
-        character_v_matrix::CharacterVMatrix, guild::Guild, guild_basic::GuildBasic,
-        ring_exchange_skill_equipment::RingExchangeSkillEquipment, union::Union,
-        union_artifact::UnionArtifact, union_champion::UnionChampion, union_raider::UnionRaider,
+        character_v_matrix::CharacterVMatrix, cube_history::CubeHistory, guild::Guild,
+        guild_basic::GuildBasic, potential_history::PotentialHistory,
+        ring_exchange_skill_equipment::RingExchangeSkillEquipment,
+        starforce_history::StarforceHistory, union::Union, union_artifact::UnionArtifact,
+        union_champion::UnionChampion, union_raider::UnionRaider, user::User,
     },
 };
 
@@ -276,5 +278,39 @@ pub async fn get_guild_basic(
     date: Option<&str>,
 ) -> Result<GuildBasic, ApiError> {
     api.make_request("v1/guild/basic", params!(oguild_id, date))
+        .await
+}
+
+pub async fn get_ouid(api: &MaplestoryApi) -> Result<User, ApiError> {
+    api.make_request("v1/ouid", params!()).await
+}
+
+pub async fn get_history_starforce(
+    api: &MaplestoryApi,
+    count: &str,
+    date: Option<&str>,
+    cursor: Option<&str>,
+) -> Result<StarforceHistory, ApiError> {
+    api.make_request("v1/history/starforce", params!(count, date, cursor))
+        .await
+}
+
+pub async fn get_history_potential(
+    api: &MaplestoryApi,
+    count: &str,
+    date: Option<&str>,
+    cursor: Option<&str>,
+) -> Result<PotentialHistory, ApiError> {
+    api.make_request("v1/history/potential", params!(count, date, cursor))
+        .await
+}
+
+pub async fn get_history_cube(
+    api: &MaplestoryApi,
+    count: &str,
+    date: Option<&str>,
+    cursor: Option<&str>,
+) -> Result<CubeHistory, ApiError> {
+    api.make_request("v1/history/cube", params!(count, date, cursor))
         .await
 }
