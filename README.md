@@ -10,7 +10,7 @@ Currently, this crate is only available on [KMS](https://maplestory.nexon.com/).
 
 Support for [MSEA](https://www.maplesea.com/) is coming soon.
 
-Other regions like GMS(https://www.nexon.com/maplestory/) will be supported once Nexon provides official APIs for those regions.
+Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once Nexon provides official APIs for those regions.
 
 ## Example
 
