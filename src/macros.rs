@@ -12,7 +12,7 @@ macro_rules! params {
     };
 }
 
-pub trait Param {
+pub(crate) trait Param {
     fn to_param(&self) -> Option<&str>;
 }
 

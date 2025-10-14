@@ -39,9 +39,9 @@ pub enum Region {
 }
 
 pub struct MaplestoryApi {
-    pub region: Region,
-    pub api_key: String,
-    pub origin: String,
+    pub(crate) region: Region,
+    pub(crate) api_key: String,
+    pub(crate) origin: String,
 }
 
 impl MaplestoryApi {
