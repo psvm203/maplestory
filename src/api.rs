@@ -29,20 +29,18 @@ impl MaplestoryApi {
     pub(crate) async fn make_request<T>(
         &self,
         endpoint: &str,
-        query_params: Option<&[(&'static str, &str)]>,
+        query_params: Vec<(&str, &str)>,
     ) -> Result<T, ApiError>
     where
         for<'de> T: Deserialize<'de>,
     {
-        let mut request = reqwest::Client::new()
+        let response = reqwest::Client::new()
             .get(format!("{}/maplestory/{endpoint}", &self.origin))
-            .header(API_KEY_HEADER_NAME, &self.api_key);
-
-        if let Some(params) = query_params {
-            request = request.query(params);
-        }
-
-        let response = request.send().await.or(Err(ApiError::SendRequestError))?;
+            .header(API_KEY_HEADER_NAME, &self.api_key)
+            .query(&query_params)
+            .send()
+            .await
+            .or(Err(ApiError::SendRequestError))?;
 
         if response.status() != reqwest::StatusCode::OK {
             return Err(response
