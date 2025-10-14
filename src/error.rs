@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub enum ApiError {
     #[serde(rename = "OPENAPI00001")]
     InternalServerError,
