@@ -17,7 +17,8 @@ use crate::{
         character_set_effect::CharacterSetEffect, character_skill::CharacterSkill,
         character_stat::CharacterStat, character_symbol_equipment::CharacterSymbolEquipment,
         character_v_matrix::CharacterVMatrix,
-        ring_exchange_skill_equipment::RingExchangeSkillEquipment,
+        ring_exchange_skill_equipment::RingExchangeSkillEquipment, union::Union,
+        union_artifact::UnionArtifact, union_champion::UnionChampion, union_raider::UnionRaider,
     },
 };
 
@@ -223,4 +224,39 @@ pub async fn get_character_ring_exchange_skill_equipment(
         params!(ocid, date),
     )
     .await
+}
+
+pub async fn get_user_union(
+    api: &MaplestoryApi,
+    ocid: &str,
+    date: Option<&str>,
+) -> Result<Union, ApiError> {
+    api.make_request("v1/user/union", params!(ocid, date)).await
+}
+
+pub async fn get_user_union_raider(
+    api: &MaplestoryApi,
+    ocid: &str,
+    date: Option<&str>,
+) -> Result<UnionRaider, ApiError> {
+    api.make_request("v1/user/union-raider", params!(ocid, date))
+        .await
+}
+
+pub async fn get_user_union_artifact(
+    api: &MaplestoryApi,
+    ocid: &str,
+    date: Option<&str>,
+) -> Result<UnionArtifact, ApiError> {
+    api.make_request("v1/user/union-artifact", params!(ocid, date))
+        .await
+}
+
+pub async fn get_user_union_champion(
+    api: &MaplestoryApi,
+    ocid: &str,
+    date: Option<&str>,
+) -> Result<UnionChampion, ApiError> {
+    api.make_request("v1/user/union-champion", params!(ocid, date))
+        .await
 }
