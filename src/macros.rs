@@ -5,8 +5,8 @@ macro_rules! params {
             [$(
                 $key.to_param().map(|value| (stringify!($key), value))
             ), *]
-            .iter()
-            .filter_map(|opt| *opt)
+            .into_iter()
+            .filter_map(|opt| opt)
             .collect()
         }
     };
