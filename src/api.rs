@@ -1,8 +1,10 @@
 use crate::{
     error::ApiError,
     kms,
-    prelude::error_message::ErrorMessage,
-    schemas::{achievement, character, character_list},
+    schemas::{
+        achievement::Achievement, character::Character, character_list::CharacterList,
+        error_message::ErrorMessage,
+    },
 };
 use serde::de::Deserialize;
 
@@ -54,15 +56,15 @@ impl MaplestoryApi {
         response.json::<T>().await.or(Err(ApiError::ParseError))
     }
 
-    pub async fn get_character_list(&self) -> Result<character_list::CharacterList, ApiError> {
+    pub async fn get_character_list(&self) -> Result<CharacterList, ApiError> {
         kms::get_character_list(self).await
     }
 
-    pub async fn get_user_achievement(&self) -> Result<achievement::Achievement, ApiError> {
+    pub async fn get_user_achievement(&self) -> Result<Achievement, ApiError> {
         kms::get_user_achievement(self).await
     }
 
-    pub async fn get_id(&self, character_name: &str) -> Result<character::Character, ApiError> {
+    pub async fn get_id(&self, character_name: &str) -> Result<Character, ApiError> {
         kms::get_id(self, character_name).await
     }
 }
