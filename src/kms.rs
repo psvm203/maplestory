@@ -4,8 +4,9 @@ use crate::{
     macros::Param,
     params,
     schemas::{
-        achievement::Achievement, achievement_ranking::AchievementRanking, character::Character,
-        character_ability::CharacterAbility,
+        achievement::Achievement, achievement_ranking::AchievementRanking,
+        cashshop_notice_detail::CashshopNoticeDetail, cashshop_notice_list::CashshopNoticeList,
+        character::Character, character_ability::CharacterAbility,
         character_android_equipment::CharacterAndroidEquipment, character_basic::CharacterBasic,
         character_beauty_equipment::CharacterBeautyEquipment,
         character_cash_item_equipment::CharacterCashItemEquipment,
@@ -18,13 +19,15 @@ use crate::{
         character_set_effect::CharacterSetEffect, character_skill::CharacterSkill,
         character_stat::CharacterStat, character_symbol_equipment::CharacterSymbolEquipment,
         character_v_matrix::CharacterVMatrix, cube_history::CubeHistory,
-        dojang_ranking::DojangRanking, guild::Guild, guild_basic::GuildBasic,
-        guild_ranking::GuildRanking, overall_ranking::OverallRanking,
-        potential_history::PotentialHistory,
+        dojang_ranking::DojangRanking, event_notice_detail::EventNoticeDetail,
+        event_notice_list::EventNoticeList, guild::Guild, guild_basic::GuildBasic,
+        guild_ranking::GuildRanking, notice_detail::NoticeDetail, notice_list::NoticeList,
+        overall_ranking::OverallRanking, potential_history::PotentialHistory,
         ring_exchange_skill_equipment::RingExchangeSkillEquipment,
         starforce_history::StarforceHistory, the_seed_ranking::TheSeedRanking, union::Union,
         union_artifact::UnionArtifact, union_champion::UnionChampion, union_raider::UnionRaider,
-        union_ranking::UnionRanking, user::User,
+        union_ranking::UnionRanking, update_notice_detail::UpdateNoticeDetail,
+        update_notice_list::UpdateNoticeList, user::User,
     },
 };
 
@@ -395,5 +398,53 @@ pub async fn get_ranking_achievement(
     page: Option<&str>,
 ) -> Result<AchievementRanking, ApiError> {
     api.make_request("v1/ranking/achievement", params!(date, ocid, page))
+        .await
+}
+
+pub async fn get_notice(api: &MaplestoryApi) -> Result<NoticeList, ApiError> {
+    api.make_request("v1/notice", params!()).await
+}
+
+pub async fn get_notice_detail(
+    api: &MaplestoryApi,
+    notice_id: &str,
+) -> Result<NoticeDetail, ApiError> {
+    api.make_request("v1/notice/detail", params!(notice_id))
+        .await
+}
+
+pub async fn get_notice_update(api: &MaplestoryApi) -> Result<UpdateNoticeList, ApiError> {
+    api.make_request("v1/notice-update", params!()).await
+}
+
+pub async fn get_notice_update_detail(
+    api: &MaplestoryApi,
+    notice_id: &str,
+) -> Result<UpdateNoticeDetail, ApiError> {
+    api.make_request("v1/notice-update/detail", params!(notice_id))
+        .await
+}
+
+pub async fn get_notice_event(api: &MaplestoryApi) -> Result<EventNoticeList, ApiError> {
+    api.make_request("v1/notice-event", params!()).await
+}
+
+pub async fn get_notice_event_detail(
+    api: &MaplestoryApi,
+    notice_id: &str,
+) -> Result<EventNoticeDetail, ApiError> {
+    api.make_request("v1/notice-event/detail", params!(notice_id))
+        .await
+}
+
+pub async fn get_notice_cashshop(api: &MaplestoryApi) -> Result<CashshopNoticeList, ApiError> {
+    api.make_request("v1/notice-cashshop", params!()).await
+}
+
+pub async fn get_notice_cashshop_detail(
+    api: &MaplestoryApi,
+    notice_id: &str,
+) -> Result<CashshopNoticeDetail, ApiError> {
+    api.make_request("v1/notice-cashshop/detail", params!(notice_id))
         .await
 }
