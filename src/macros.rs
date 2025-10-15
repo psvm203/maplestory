@@ -24,9 +24,6 @@ impl Param for &str {
 
 impl Param for Option<&str> {
     fn to_param(&self) -> Option<&str> {
-        match self {
-            Some(_) => *self,
-            None => None,
-        }
+        *self
     }
 }
