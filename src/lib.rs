@@ -1,6 +1,6 @@
 pub mod api;
 pub mod error;
-pub mod kms;
-pub mod macros;
+pub(crate) mod kms;
+pub(crate) mod macros;
 pub mod prelude;
 pub mod schemas;
