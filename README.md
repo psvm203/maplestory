@@ -22,7 +22,7 @@ So your `Cargo.toml` would look like:
 
 ```toml
 [dependencies]
-maplestory = { version = "1.0.2" }
+maplestory = { version = "1.1.0" }
 tokio = { version = "1.48.0", features = ["full"] }
 ```
 
