@@ -33,7 +33,7 @@ use maplestory::prelude::*;
 
 #[tokio::main]
 async fn main() {
-    let api = MaplestoryApi::builder().region(Region::KMS).api_key("YOUR_API_KEY").build().unwrap();
+    let api = MaplestoryApi::builder().region(Region::KMS).api_key("YOUR_API_KEY").build();
     let ocid = api.get_id("00월").await.unwrap().ocid;
     let character_level = api
         .get_character_basic(&ocid, None)

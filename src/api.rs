@@ -617,19 +617,21 @@ impl MaplestoryApiBuilder {
         self
     }
 
-    pub fn build(self) -> Result<MaplestoryApi, &'static str> {
+    pub fn build(self) -> MaplestoryApi {
         let region = self.region.unwrap_or(Region::KMS);
 
-        let api_key = self.api_key.ok_or("api_key is required")?;
+        let api_key = self
+            .api_key
+            .unwrap_or_else(|| panic!("api_key is required"));
 
         let origin = self
             .origin
             .unwrap_or_else(|| "https://open.api.nexon.com".to_owned());
 
-        Ok(MaplestoryApi {
+        MaplestoryApi {
             region,
             api_key,
             origin,
-        })
+        }
     }
 }
