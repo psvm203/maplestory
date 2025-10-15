@@ -1,6 +1,7 @@
 use crate::{
     error::ApiError,
-    kms,
+    macros::Param,
+    params,
     schemas::{
         achievement::Achievement, achievement_ranking::AchievementRanking,
         cashshop_notice_detail::CashshopNoticeDetail, cashshop_notice_list::CashshopNoticeList,
@@ -33,6 +34,7 @@ use serde::de::Deserialize;
 
 const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 
+#[derive(PartialEq, Eq)]
 pub enum Region {
     KMS,
     MSEA,
@@ -57,8 +59,14 @@ impl MaplestoryApi {
     where
         for<'de> T: Deserialize<'de>,
     {
+        let origin = &self.origin;
+        let service = match self.region {
+            Region::KMS => "maplestory",
+            Region::MSEA => "maplestorysea",
+        };
+
         let response = reqwest::Client::new()
-            .get(format!("{}/maplestory/{endpoint}", &self.origin))
+            .get(format!("{origin}/{service}/{endpoint}"))
             .header(API_KEY_HEADER_NAME, &self.api_key)
             .query(&query_params)
             .send()
@@ -78,15 +86,23 @@ impl MaplestoryApi {
     }
 
     pub async fn get_character_list(&self) -> Result<CharacterList, ApiError> {
-        kms::get_character_list(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/character/list", params!()).await
     }
 
     pub async fn get_user_achievement(&self) -> Result<Achievement, ApiError> {
-        kms::get_user_achievement(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/user/achievement", params!()).await
     }
 
     pub async fn get_id(&self, character_name: &str) -> Result<Character, ApiError> {
-        kms::get_id(self, character_name).await
+        self.make_request("v1/id", params!(character_name)).await
     }
 
     pub async fn get_character_basic(
@@ -94,7 +110,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterBasic, ApiError> {
-        kms::get_character_basic(self, ocid, date).await
+        self.make_request("v1/character/basic", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_popularity(
@@ -102,7 +119,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterPopularity, ApiError> {
-        kms::get_character_popularity(self, ocid, date).await
+        self.make_request("v1/character/popularity", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_stat(
@@ -110,7 +128,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterStat, ApiError> {
-        kms::get_character_stat(self, ocid, date).await
+        self.make_request("v1/character/stat", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_hyperstat(
@@ -118,7 +137,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterHyperStat, ApiError> {
-        kms::get_character_hyperstat(self, ocid, date).await
+        self.make_request("v1/character/hyper-stat", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_propensity(
@@ -126,7 +146,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterPropensity, ApiError> {
-        kms::get_character_propensity(self, ocid, date).await
+        self.make_request("v1/character/propensity", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_ability(
@@ -134,7 +155,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterAbility, ApiError> {
-        kms::get_character_ability(self, ocid, date).await
+        self.make_request("v1/character/ability", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_item_equipment(
@@ -142,7 +164,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterItemEquipment, ApiError> {
-        kms::get_character_item_equipment(self, ocid, date).await
+        self.make_request("v1/character/item-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_cashitem_equipment(
@@ -150,7 +173,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterCashItemEquipment, ApiError> {
-        kms::get_character_cashitem_equipment(self, ocid, date).await
+        self.make_request("v1/character/cashitem-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_symbol_equipment(
@@ -158,7 +182,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterSymbolEquipment, ApiError> {
-        kms::get_character_symbol_equipment(self, ocid, date).await
+        self.make_request("v1/character/symbol-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_set_effect(
@@ -166,7 +191,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterSetEffect, ApiError> {
-        kms::get_character_set_effect(self, ocid, date).await
+        self.make_request("v1/character/set-effect", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_beauty_equipment(
@@ -174,7 +200,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterBeautyEquipment, ApiError> {
-        kms::get_character_beauty_equipment(self, ocid, date).await
+        self.make_request("v1/character/beauty-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_android_equipment(
@@ -182,7 +209,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterAndroidEquipment, ApiError> {
-        kms::get_character_android_equipment(self, ocid, date).await
+        self.make_request("v1/character/android-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_pet_equipment(
@@ -190,7 +218,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterPetEquipment, ApiError> {
-        kms::get_character_pet_equipment(self, ocid, date).await
+        self.make_request("v1/character/pet-equipment", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_skill(
@@ -198,7 +227,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterSkill, ApiError> {
-        kms::get_character_skill(self, ocid, date).await
+        self.make_request("v1/character/skill", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_link_skill(
@@ -206,7 +236,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterLinkSkill, ApiError> {
-        kms::get_character_link_skill(self, ocid, date).await
+        self.make_request("v1/character/link-skill", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_vmatrix(
@@ -214,7 +245,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterVMatrix, ApiError> {
-        kms::get_character_vmatrix(self, ocid, date).await
+        self.make_request("v1/character/vmatrix", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_hexamatrix(
@@ -222,7 +254,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterHexaMatrix, ApiError> {
-        kms::get_character_hexamatrix(self, ocid, date).await
+        self.make_request("v1/character/hexamatrix", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_hexamatrix_stat(
@@ -230,7 +263,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterHexaMatrixStat, ApiError> {
-        kms::get_character_hexamatrix_stat(self, ocid, date).await
+        self.make_request("v1/character/hexamatrix-stat", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_dojang(
@@ -238,7 +272,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterDojang, ApiError> {
-        kms::get_character_dojang(self, ocid, date).await
+        self.make_request("v1/character/dojang", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_other_stat(
@@ -246,7 +281,12 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<CharacterOtherStat, ApiError> {
-        kms::get_character_other_stat(self, ocid, date).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/character/other-stat", params!(ocid, date))
+            .await
     }
 
     pub async fn get_character_ring_exchange_skill_equipment(
@@ -254,11 +294,20 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<RingExchangeSkillEquipment, ApiError> {
-        kms::get_character_ring_exchange_skill_equipment(self, ocid, date).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request(
+            "v1/character/ring-exchange-skill-equipment",
+            params!(ocid, date),
+        )
+        .await
     }
 
     pub async fn get_user_union(&self, ocid: &str, date: Option<&str>) -> Result<Union, ApiError> {
-        kms::get_user_union(self, ocid, date).await
+        self.make_request("v1/user/union", params!(ocid, date))
+            .await
     }
 
     pub async fn get_user_union_raider(
@@ -266,7 +315,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<UnionRaider, ApiError> {
-        kms::get_user_union_raider(self, ocid, date).await
+        self.make_request("v1/user/union-raider", params!(ocid, date))
+            .await
     }
 
     pub async fn get_user_union_artifact(
@@ -274,7 +324,8 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<UnionArtifact, ApiError> {
-        kms::get_user_union_artifact(self, ocid, date).await
+        self.make_request("v1/user/union-artifact", params!(ocid, date))
+            .await
     }
 
     pub async fn get_user_union_champion(
@@ -282,7 +333,12 @@ impl MaplestoryApi {
         ocid: &str,
         date: Option<&str>,
     ) -> Result<UnionChampion, ApiError> {
-        kms::get_user_union_champion(self, ocid, date).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/user/union-champion", params!(ocid, date))
+            .await
     }
 
     pub async fn get_guild_id(
@@ -290,7 +346,8 @@ impl MaplestoryApi {
         guild_name: &str,
         world_name: &str,
     ) -> Result<Guild, ApiError> {
-        kms::get_guild_id(self, guild_name, world_name).await
+        self.make_request("v1/guild/id", params!(guild_name, world_name))
+            .await
     }
 
     pub async fn get_guild_basic(
@@ -298,11 +355,16 @@ impl MaplestoryApi {
         oguild_id: &str,
         date: Option<&str>,
     ) -> Result<GuildBasic, ApiError> {
-        kms::get_guild_basic(self, oguild_id, date).await
+        self.make_request("v1/guild/basic", params!(oguild_id, date))
+            .await
     }
 
     pub async fn get_ouid(&self) -> Result<User, ApiError> {
-        kms::get_ouid(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/ouid", params!()).await
     }
 
     pub async fn get_history_starforce(
@@ -311,7 +373,12 @@ impl MaplestoryApi {
         date: Option<&str>,
         cursor: Option<&str>,
     ) -> Result<StarforceHistory, ApiError> {
-        kms::get_history_starforce(self, count, date, cursor).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/history/starforce", params!(count, date, cursor))
+            .await
     }
 
     pub async fn get_history_potential(
@@ -320,7 +387,12 @@ impl MaplestoryApi {
         date: Option<&str>,
         cursor: Option<&str>,
     ) -> Result<PotentialHistory, ApiError> {
-        kms::get_history_potential(self, count, date, cursor).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/history/potential", params!(count, date, cursor))
+            .await
     }
 
     pub async fn get_history_cube(
@@ -329,7 +401,12 @@ impl MaplestoryApi {
         date: Option<&str>,
         cursor: Option<&str>,
     ) -> Result<CubeHistory, ApiError> {
-        kms::get_history_cube(self, count, date, cursor).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/history/cube", params!(count, date, cursor))
+            .await
     }
 
     pub async fn get_ranking_overall(
@@ -341,7 +418,15 @@ impl MaplestoryApi {
         ocid: Option<&str>,
         page: Option<&str>,
     ) -> Result<OverallRanking, ApiError> {
-        kms::get_ranking_overall(self, date, world_name, world_type, class, ocid, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request(
+            "v1/ranking/overall",
+            params!(date, world_name, world_type, class, ocid, page),
+        )
+        .await
     }
 
     pub async fn get_ranking_union(
@@ -351,7 +436,12 @@ impl MaplestoryApi {
         ocid: Option<&str>,
         page: Option<&str>,
     ) -> Result<UnionRanking, ApiError> {
-        kms::get_ranking_union(self, date, world_name, ocid, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/ranking/union", params!(date, world_name, ocid, page))
+            .await
     }
 
     pub async fn get_ranking_guild(
@@ -362,7 +452,15 @@ impl MaplestoryApi {
         guild_name: Option<&str>,
         page: Option<&str>,
     ) -> Result<GuildRanking, ApiError> {
-        kms::get_ranking_guild(self, date, world_name, ranking_type, guild_name, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request(
+            "v1/ranking/guild",
+            params!(date, world_name, ranking_type, guild_name, page),
+        )
+        .await
     }
 
     pub async fn get_ranking_dojang(
@@ -374,7 +472,15 @@ impl MaplestoryApi {
         ocid: Option<&str>,
         page: Option<&str>,
     ) -> Result<DojangRanking, ApiError> {
-        kms::get_ranking_dojang(self, date, world_name, difficulty, class, ocid, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request(
+            "v1/ranking/dojang",
+            params!(date, world_name, difficulty, class, ocid, page),
+        )
+        .await
     }
 
     pub async fn get_ranking_theseed(
@@ -384,7 +490,12 @@ impl MaplestoryApi {
         ocid: Option<&str>,
         page: Option<&str>,
     ) -> Result<TheSeedRanking, ApiError> {
-        kms::get_ranking_theseed(self, date, world_name, ocid, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/ranking/theseed", params!(date, world_name, ocid, page))
+            .await
     }
 
     pub async fn get_ranking_achievement(
@@ -393,48 +504,89 @@ impl MaplestoryApi {
         ocid: Option<&str>,
         page: Option<&str>,
     ) -> Result<AchievementRanking, ApiError> {
-        kms::get_ranking_achievement(self, date, ocid, page).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/ranking/achievement", params!(date, ocid, page))
+            .await
     }
 
     pub async fn get_notice(&self) -> Result<NoticeList, ApiError> {
-        kms::get_notice(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice", params!()).await
     }
 
     pub async fn get_notice_detail(&self, notice_id: &str) -> Result<NoticeDetail, ApiError> {
-        kms::get_notice_detail(self, notice_id).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice/detail", params!(notice_id))
+            .await
     }
 
     pub async fn get_notice_update(&self) -> Result<UpdateNoticeList, ApiError> {
-        kms::get_notice_update(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-update", params!()).await
     }
 
     pub async fn get_notice_update_detail(
         &self,
         notice_id: &str,
     ) -> Result<UpdateNoticeDetail, ApiError> {
-        kms::get_notice_update_detail(self, notice_id).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-update/detail", params!(notice_id))
+            .await
     }
 
     pub async fn get_notice_event(&self) -> Result<EventNoticeList, ApiError> {
-        kms::get_notice_event(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-event", params!()).await
     }
 
     pub async fn get_notice_event_detail(
         &self,
         notice_id: &str,
     ) -> Result<EventNoticeDetail, ApiError> {
-        kms::get_notice_event_detail(self, notice_id).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-event/detail", params!(notice_id))
+            .await
     }
 
     pub async fn get_notice_cashshop(&self) -> Result<CashshopNoticeList, ApiError> {
-        kms::get_notice_cashshop(self).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-cashshop", params!()).await
     }
 
     pub async fn get_notice_cashshop_detail(
         &self,
         notice_id: &str,
     ) -> Result<CashshopNoticeDetail, ApiError> {
-        kms::get_notice_cashshop_detail(self, notice_id).await
+        if self.region != Region::KMS {
+            return Err(ApiError::NotSupported);
+        }
+
+        self.make_request("v1/notice-cashshop/detail", params!(notice_id))
+            .await
     }
 }
 

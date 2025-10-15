@@ -24,4 +24,5 @@ pub enum ApiError {
     ApiUnderMaintenance,
     SendRequestError,
     ParseError,
+    NotSupported,
 }
