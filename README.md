@@ -100,9 +100,9 @@ When user does not provide optional date parameter, `date` field becomes null.  
 When character not joined to a guild, `character_guild_name` field becomes null.  \
 Other fields are not null in any case.
 
-## Api
+## API
 
-|Api|Description|KMS|MSEA|
+|API|Description|KMS|MSEA|
 |-|-|:-:|:-:|
 |get_character_list|Retrieve list of characters in account|O|X|
 |get_user_achievement|Retrieve user achievement information|O|X|
