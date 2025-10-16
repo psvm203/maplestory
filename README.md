@@ -53,7 +53,7 @@ async fn main() {
 
 ![level](./assets/level.png)
 
-This example prints "my character level: 281" (which has probably increased since I wrote this README).
+This example prints my character level, 281. (which has probably increased since I wrote this README).
 
 ## MaplestoryApi
 ```rust
