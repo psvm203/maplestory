@@ -61,12 +61,13 @@ impl Param for Option<&str> {
 
 const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 
-#[derive(PartialEq, Eq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Region {
     KMS,
     MSEA,
 }
 
+#[derive(Clone)]
 pub struct MaplestoryApi {
     pub(crate) region: Region,
     pub(crate) api_key: String,
@@ -616,6 +617,44 @@ impl MaplestoryApi {
             .await
     }
 }
+
+/// Generate [`MaplestoryApi`] using Builder Pattern.
+///
+/// `region` represents the region(KMS/MSEA). Default is [`Region::KMS`].
+///
+/// `api_key` is required to access [NEXON Open API](https://openapi.nexon.com/).
+///
+/// `origin` indicates the base URL of maplestory API server. If you want [Official API server](https://open.api.nexon.com)(default), leave this field as `None`. If you want proxy server, take a look an example at [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
+///
+/// # Panics
+///
+/// `build()` will panic if `api_key` is not provided.
+///
+/// ```should_panic
+/// use maplestory::prelude::*;
+///
+/// # fn main() {
+/// let api = MaplestoryApi::builder().build();
+/// # }
+/// ```
+///
+/// # Examples
+///
+/// ```rust
+/// use maplestory::prelude::*;
+///
+/// # fn main() {
+/// let builder = MaplestoryApi::builder()
+///     .region(Region::KMS)
+///     .api_key("YOUR_API_KEY");
+///
+/// assert_eq!(builder.region, Some(Region::KMS));
+/// assert_eq!(builder.api_key, Some("YOUR_API_KEY".to_owned()));
+/// assert_eq!(builder.origin, None);
+///
+/// let api = builder.build();
+/// # }
+/// ```
 
 #[derive(Default)]
 pub struct MaplestoryApiBuilder {
