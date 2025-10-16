@@ -17,5 +17,5 @@ pub struct CharacterListElement {
     pub character_name: String,
     pub world_name: String,
     pub character_class: String,
-    pub character_level: u32,
+    pub character_level: i64,
 }
