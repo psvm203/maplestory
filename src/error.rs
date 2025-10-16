@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use std::fmt::Display;
 
 #[derive(Debug, Deserialize)]
 pub enum ApiError {
@@ -25,4 +26,10 @@ pub enum ApiError {
     SendRequestError,
     ParseError,
     NotSupported,
+}
+
+impl Display for ApiError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
