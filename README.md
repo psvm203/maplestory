@@ -2,12 +2,12 @@
 [![docs.rs](https://img.shields.io/docsrs/maplestory?link=https%3A%2F%2Fdocs.rs%2Fmaplestory)](https://docs.rs/maplestory)
 
 # maplestory
-easy-to-use MapleStory API wrapper for Rust
+easy-to-use maplestory API wrapper for Rust
 
 ## Regional Support
 
 Currently, this crate is available on [KMS](https://maplestory.nexon.com/) and [MSEA](https://www.maplesea.com/).  \
-Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once Nexon provides official APIs for those regions.
+Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once NEXON provides official APIs for those regions.
 
 ## Example
 
@@ -22,7 +22,7 @@ So your `Cargo.toml` would look like:
 
 ```toml
 [dependencies]
-maplestory = { version = "1.1.0" }
+maplestory = { version = "1.1.1" }
 tokio = { version = "1.48.0", features = ["full"] }
 ```
 
@@ -31,23 +31,29 @@ Then, on your `main.rs`,
 ```rust
 use maplestory::prelude::*;
 
+async fn get_character_level() -> Result<i64, ApiError> {
+    let api = MaplestoryApi::builder()
+        .region(Region::KMS)
+        .api_key("YOUR_API_KEY")
+        .build();
+
+    let ocid = api.get_id("00월").await?.ocid;
+
+    Ok(api.get_character_basic(&ocid, None).await?.character_level)
+}
+
 #[tokio::main]
 async fn main() {
-    let api = MaplestoryApi::builder().region(Region::KMS).api_key("YOUR_API_KEY").build();
-    let ocid = api.get_id("00월").await.unwrap().ocid;
-    let character_level = api
-        .get_character_basic(&ocid, None)
-        .await
-        .unwrap()
-        .character_level;
-
-    println!("{character_level}");
+    match get_character_level().await {
+        Ok(character_level) => println!("character level: {character_level}"),
+        Err(e) => eprintln!("Error: {e}"),
+    };
 }
 ```
 
 ![level](./assets/level.png)
 
-This example prints 281, my character level (which has probably increased since I wrote this README).
+This example prints "my character level: 281" (which has probably increased since I wrote this README).
 
 ## MaplestoryApi
 ```rust
@@ -104,54 +110,54 @@ Other fields are not null in any case.
 
 |API|Description|KMS|MSEA|
 |-|-|:-:|:-:|
-|get_character_list|Retrieve list of characters in account|O|X|
-|get_user_achievement|Retrieve user achievement information|O|X|
-|get_id|Retrieve character identifier (ocid)|O|O|
-|get_character_basic|Retrieve basic character information|O|O|
-|get_character_popularity|Retrieve popularity information|O|O|
-|get_character_stat|Retrieve comprehensive stats information|O|O|
-|get_character_hyperstat|Retrieve Hyper Stat information|O|O|
-|get_character_propensity|Retrieve traits information|O|O|
-|get_character_ability|Retrieve Ability information|O|O|
-|get_character_item_equipment|Retrieve equipped equipment information (excluding cash items)|O|O|
-|get_character_cashitem_equipment|Retrieve equipped cash item information|O|O|
-|get_character_symbol_equipment|Retrieve equipped symbol information|O|O|
-|get_character_set_effect|Retrieve information about equipped set item effects|O|O|
-|get_character_beauty_equipment|Retrieve equipped hair, face, and skin information|O|O|
-|get_character_android_equipment|Retrieve equipped andriod information|O|O|
-|get_character_pet_equipment|Retrieve equipped pet information|O|O|
-|get_character_skill|Retrieve skill information|O|O|
-|get_character_link_skill|Retrieve equipped Link Skill information|O|O|
-|get_character_vmatrix|Retrieve V Matrix information|O|O|
-|get_character_hexamatrix|Retrieve HEXA Node information|O|O|
-|get_character_hexamatrix_stat|Retrieve HEXA stats information|O|O|
-|get_character_dojang|Retrieve Mu Lung Dojo highest record information|O|O|
-|get_character_other_stat|Retrieve stats information difficult to verify in other api|O|X|
-|get_character_ring_exchange_skill_equipment|Retrieve ring exchange skill equipment|O|X|
-|get_user_union|Retrieve Union information|O|O|
-|get_user_union_raider|Retrieve Union Raider information|O|O|
-|get_user_union_artifact|Retrieve Union Artifact information|O|O|
-|get_user_union_champion|Retrieve Union Champion information|O|X|
-|get_guild_id|Retrieve guild identifier (oguild_id) information|O|O|
-|get_guild_basic|Retrieve basic information|O|O|
-|get_ouid|Retrieve user identifier (ouid)|O|X|
-|get_history_starforce|Retrieve results of Star Force|O|X|
-|get_history_potential|Retrieve results of Potential Reset|O|X|
-|get_history_cube|Retrieve results of Cube|O|X|
-|get_ranking_overall|Retrieve Overall ranking information|O|X|
-|get_ranking_union|Retrieve Union information|O|X|
-|get_ranking_guild|Retrieve Guild ranking information|O|X|
-|get_ranking_dojang|Retrieve Mu Lung Dojo ranking information|O|X|
-|get_ranking_theseed|Retrieve Tower of Oz ranking information|O|X|
-|get_ranking_achievement|Retrieve Achievement ranking information|O|X|
-|get_notice|Retrieve recently registered Maplestory Generals|O|X|
-|get_notice_detail|Retrieve Maplestory General details|O|X|
-|get_notice_update|Retrieve recently registered Maplestory Updates|O|X|
-|get_notice_update_detail|Retrieve Maplestory Update details|O|X|
-|get_notice_event|Retrieve recently registered Maplestory Events|O|X|
-|get_notice_event_detail|Retrieve Maplestory Event details|O|X|
-|get_notice_cashshop|Retrieve recently registered Maplestory Sales|O|X|
-|get_notice_cashshop_detail|Retrieve Maplestory Sale details|O|X|
+|get_character_list|Retrieve list of characters in account|✅|❌|
+|get_user_achievement|Retrieve user achievement information|✅|❌|
+|get_id|Retrieve character identifier (ocid)|✅|✅|
+|get_character_basic|Retrieve basic character information|✅|✅|
+|get_character_popularity|Retrieve popularity information|✅|✅|
+|get_character_stat|Retrieve comprehensive stats information|✅|✅|
+|get_character_hyperstat|Retrieve Hyper Stat information|✅|✅|
+|get_character_propensity|Retrieve traits information|✅|✅|
+|get_character_ability|Retrieve Ability information|✅|✅|
+|get_character_item_equipment|Retrieve equipped equipment information (excluding cash items)|✅|✅|
+|get_character_cashitem_equipment|Retrieve equipped cash item information|✅|✅|
+|get_character_symbol_equipment|Retrieve equipped symbol information|✅|✅|
+|get_character_set_effect|Retrieve information about equipped set item effects|✅|✅|
+|get_character_beauty_equipment|Retrieve equipped hair, face, and skin information|✅|✅|
+|get_character_android_equipment|Retrieve equipped andriod information|✅|✅|
+|get_character_pet_equipment|Retrieve equipped pet information|✅|✅|
+|get_character_skill|Retrieve skill information|✅|✅|
+|get_character_link_skill|Retrieve equipped Link Skill information|✅|✅|
+|get_character_vmatrix|Retrieve V Matrix information|✅|✅|
+|get_character_hexamatrix|Retrieve HEXA Node information|✅|✅|
+|get_character_hexamatrix_stat|Retrieve HEXA stats information|✅|✅|
+|get_character_dojang|Retrieve Mu Lung Dojo highest record information|✅|✅|
+|get_character_other_stat|Retrieve stats information difficult to verify in other api|✅|❌|
+|get_character_ring_exchange_skill_equipment|Retrieve ring exchange skill equipment|✅|❌|
+|get_user_union|Retrieve Union information|✅|✅|
+|get_user_union_raider|Retrieve Union Raider information|✅|✅|
+|get_user_union_artifact|Retrieve Union Artifact information|✅|✅|
+|get_user_union_champion|Retrieve Union Champion information|✅|❌|
+|get_guild_id|Retrieve guild identifier (oguild_id) information|✅|✅|
+|get_guild_basic|Retrieve basic information|✅|✅|
+|get_ouid|Retrieve user identifier (ouid)|✅|❌|
+|get_history_starforce|Retrieve results of Star Force|✅|❌|
+|get_history_potential|Retrieve results of Potential Reset|✅|❌|
+|get_history_cube|Retrieve results of Cube|✅|❌|
+|get_ranking_overall|Retrieve Overall ranking information|✅|❌|
+|get_ranking_union|Retrieve Union information|✅|❌|
+|get_ranking_guild|Retrieve Guild ranking information|✅|❌|
+|get_ranking_dojang|Retrieve Mu Lung Dojo ranking information|✅|❌|
+|get_ranking_theseed|Retrieve Tower of Oz ranking information|✅|❌|
+|get_ranking_achievement|Retrieve Achievement ranking information|✅|❌|
+|get_notice|Retrieve recently registered Maplestory Generals|✅|❌|
+|get_notice_detail|Retrieve Maplestory General details|✅|❌|
+|get_notice_update|Retrieve recently registered Maplestory Updates|✅|❌|
+|get_notice_update_detail|Retrieve Maplestory Update details|✅|❌|
+|get_notice_event|Retrieve recently registered Maplestory Events|✅|❌|
+|get_notice_event_detail|Retrieve Maplestory Event details|✅|❌|
+|get_notice_cashshop|Retrieve recently registered Maplestory Sales|✅|❌|
+|get_notice_cashshop_detail|Retrieve Maplestory Sale details|✅|❌|
 
 ## Errors
 
