@@ -44,18 +44,18 @@ macro_rules! params {
 }
 
 trait Param {
-    fn to_param(&self) -> Option<&str>;
+    fn to_param(&self) -> Option<String>;
 }
 
-impl Param for &str {
-    fn to_param(&self) -> Option<&str> {
-        Some(self)
+impl Param for String {
+    fn to_param(&self) -> Option<String> {
+        Some(self.clone())
     }
 }
 
-impl Param for Option<&str> {
-    fn to_param(&self) -> Option<&str> {
-        *self
+impl Param for Option<String> {
+    fn to_param(&self) -> Option<String> {
+        self.clone()
     }
 }
 
@@ -82,7 +82,7 @@ impl MaplestoryApi {
     pub(crate) async fn make_request<T>(
         &self,
         endpoint: &str,
-        query_params: Vec<(&str, &str)>,
+        query_params: Vec<(&str, String)>,
     ) -> Result<T, ApiError>
     where
         for<'de> T: Deserialize<'de>,
@@ -131,14 +131,14 @@ impl MaplestoryApi {
         self.make_request("v1/user/achievement", params!()).await
     }
 
-    pub async fn get_id(&self, character_name: &str) -> Result<Character, ApiError> {
+    pub async fn get_id<S>(&self, character_name: String) -> Result<Character, ApiError> {
         self.make_request("v1/id", params!(character_name)).await
     }
 
     pub async fn get_character_basic(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterBasic, ApiError> {
         self.make_request("v1/character/basic", params!(ocid, date))
             .await
@@ -146,8 +146,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_popularity(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterPopularity, ApiError> {
         self.make_request("v1/character/popularity", params!(ocid, date))
             .await
@@ -155,8 +155,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_stat(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterStat, ApiError> {
         self.make_request("v1/character/stat", params!(ocid, date))
             .await
@@ -164,8 +164,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_hyperstat(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterHyperStat, ApiError> {
         self.make_request("v1/character/hyper-stat", params!(ocid, date))
             .await
@@ -173,8 +173,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_propensity(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterPropensity, ApiError> {
         self.make_request("v1/character/propensity", params!(ocid, date))
             .await
@@ -182,8 +182,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_ability(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterAbility, ApiError> {
         self.make_request("v1/character/ability", params!(ocid, date))
             .await
@@ -191,8 +191,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_item_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterItemEquipment, ApiError> {
         self.make_request("v1/character/item-equipment", params!(ocid, date))
             .await
@@ -200,8 +200,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_cashitem_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterCashItemEquipment, ApiError> {
         self.make_request("v1/character/cashitem-equipment", params!(ocid, date))
             .await
@@ -209,8 +209,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_symbol_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterSymbolEquipment, ApiError> {
         self.make_request("v1/character/symbol-equipment", params!(ocid, date))
             .await
@@ -218,8 +218,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_set_effect(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterSetEffect, ApiError> {
         self.make_request("v1/character/set-effect", params!(ocid, date))
             .await
@@ -227,8 +227,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_beauty_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterBeautyEquipment, ApiError> {
         self.make_request("v1/character/beauty-equipment", params!(ocid, date))
             .await
@@ -236,8 +236,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_android_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterAndroidEquipment, ApiError> {
         self.make_request("v1/character/android-equipment", params!(ocid, date))
             .await
@@ -245,8 +245,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_pet_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterPetEquipment, ApiError> {
         self.make_request("v1/character/pet-equipment", params!(ocid, date))
             .await
@@ -254,8 +254,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_skill(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterSkill, ApiError> {
         self.make_request("v1/character/skill", params!(ocid, date))
             .await
@@ -263,8 +263,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_link_skill(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterLinkSkill, ApiError> {
         self.make_request("v1/character/link-skill", params!(ocid, date))
             .await
@@ -272,8 +272,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_vmatrix(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterVMatrix, ApiError> {
         self.make_request("v1/character/vmatrix", params!(ocid, date))
             .await
@@ -281,8 +281,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_hexamatrix(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterHexaMatrix, ApiError> {
         self.make_request("v1/character/hexamatrix", params!(ocid, date))
             .await
@@ -290,8 +290,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_hexamatrix_stat(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterHexaMatrixStat, ApiError> {
         self.make_request("v1/character/hexamatrix-stat", params!(ocid, date))
             .await
@@ -299,8 +299,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_dojang(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterDojang, ApiError> {
         self.make_request("v1/character/dojang", params!(ocid, date))
             .await
@@ -308,8 +308,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_other_stat(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<CharacterOtherStat, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -321,8 +321,8 @@ impl MaplestoryApi {
 
     pub async fn get_character_ring_exchange_skill_equipment(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<RingExchangeSkillEquipment, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -335,15 +335,19 @@ impl MaplestoryApi {
         .await
     }
 
-    pub async fn get_user_union(&self, ocid: &str, date: Option<&str>) -> Result<Union, ApiError> {
+    pub async fn get_user_union(
+        &self,
+        ocid: String,
+        date: Option<String>,
+    ) -> Result<Union, ApiError> {
         self.make_request("v1/user/union", params!(ocid, date))
             .await
     }
 
     pub async fn get_user_union_raider(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<UnionRaider, ApiError> {
         self.make_request("v1/user/union-raider", params!(ocid, date))
             .await
@@ -351,8 +355,8 @@ impl MaplestoryApi {
 
     pub async fn get_user_union_artifact(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<UnionArtifact, ApiError> {
         self.make_request("v1/user/union-artifact", params!(ocid, date))
             .await
@@ -360,8 +364,8 @@ impl MaplestoryApi {
 
     pub async fn get_user_union_champion(
         &self,
-        ocid: &str,
-        date: Option<&str>,
+        ocid: String,
+        date: Option<String>,
     ) -> Result<UnionChampion, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -373,8 +377,8 @@ impl MaplestoryApi {
 
     pub async fn get_guild_id(
         &self,
-        guild_name: &str,
-        world_name: &str,
+        guild_name: String,
+        world_name: String,
     ) -> Result<Guild, ApiError> {
         self.make_request("v1/guild/id", params!(guild_name, world_name))
             .await
@@ -382,8 +386,8 @@ impl MaplestoryApi {
 
     pub async fn get_guild_basic(
         &self,
-        oguild_id: &str,
-        date: Option<&str>,
+        oguild_id: String,
+        date: Option<String>,
     ) -> Result<GuildBasic, ApiError> {
         self.make_request("v1/guild/basic", params!(oguild_id, date))
             .await
@@ -399,9 +403,9 @@ impl MaplestoryApi {
 
     pub async fn get_history_starforce(
         &self,
-        count: &str,
-        date: Option<&str>,
-        cursor: Option<&str>,
+        count: String,
+        date: Option<String>,
+        cursor: Option<String>,
     ) -> Result<StarforceHistory, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -413,9 +417,9 @@ impl MaplestoryApi {
 
     pub async fn get_history_potential(
         &self,
-        count: &str,
-        date: Option<&str>,
-        cursor: Option<&str>,
+        count: String,
+        date: Option<String>,
+        cursor: Option<String>,
     ) -> Result<PotentialHistory, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -427,9 +431,9 @@ impl MaplestoryApi {
 
     pub async fn get_history_cube(
         &self,
-        count: &str,
-        date: Option<&str>,
-        cursor: Option<&str>,
+        count: String,
+        date: Option<String>,
+        cursor: Option<String>,
     ) -> Result<CubeHistory, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -441,12 +445,12 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_overall(
         &self,
-        date: &str,
-        world_name: Option<&str>,
-        world_type: Option<&str>,
-        class: Option<&str>,
-        ocid: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        world_name: Option<String>,
+        world_type: Option<String>,
+        class: Option<String>,
+        ocid: Option<String>,
+        page: Option<String>,
     ) -> Result<OverallRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -461,10 +465,10 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_union(
         &self,
-        date: &str,
-        world_name: Option<&str>,
-        ocid: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        world_name: Option<String>,
+        ocid: Option<String>,
+        page: Option<String>,
     ) -> Result<UnionRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -476,11 +480,11 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_guild(
         &self,
-        date: &str,
-        world_name: Option<&str>,
-        ranking_type: &str,
-        guild_name: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        world_name: Option<String>,
+        ranking_type: String,
+        guild_name: Option<String>,
+        page: Option<String>,
     ) -> Result<GuildRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -495,12 +499,12 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_dojang(
         &self,
-        date: &str,
-        world_name: Option<&str>,
-        difficulty: &str,
-        class: Option<&str>,
-        ocid: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        world_name: Option<String>,
+        difficulty: String,
+        class: Option<String>,
+        ocid: Option<String>,
+        page: Option<String>,
     ) -> Result<DojangRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -515,10 +519,10 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_theseed(
         &self,
-        date: &str,
-        world_name: Option<&str>,
-        ocid: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        world_name: Option<String>,
+        ocid: Option<String>,
+        page: Option<String>,
     ) -> Result<TheSeedRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -530,9 +534,9 @@ impl MaplestoryApi {
 
     pub async fn get_ranking_achievement(
         &self,
-        date: &str,
-        ocid: Option<&str>,
-        page: Option<&str>,
+        date: String,
+        ocid: Option<String>,
+        page: Option<String>,
     ) -> Result<AchievementRanking, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -550,7 +554,7 @@ impl MaplestoryApi {
         self.make_request("v1/notice", params!()).await
     }
 
-    pub async fn get_notice_detail(&self, notice_id: &str) -> Result<NoticeDetail, ApiError> {
+    pub async fn get_notice_detail(&self, notice_id: String) -> Result<NoticeDetail, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
         }
@@ -569,7 +573,7 @@ impl MaplestoryApi {
 
     pub async fn get_notice_update_detail(
         &self,
-        notice_id: &str,
+        notice_id: String,
     ) -> Result<UpdateNoticeDetail, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -589,7 +593,7 @@ impl MaplestoryApi {
 
     pub async fn get_notice_event_detail(
         &self,
-        notice_id: &str,
+        notice_id: String,
     ) -> Result<EventNoticeDetail, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
@@ -609,7 +613,7 @@ impl MaplestoryApi {
 
     pub async fn get_notice_cashshop_detail(
         &self,
-        notice_id: &str,
+        notice_id: String,
     ) -> Result<CashshopNoticeDetail, ApiError> {
         if self.region != Region::KMS {
             return Err(ApiError::NotSupported);
