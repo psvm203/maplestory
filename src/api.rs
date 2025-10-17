@@ -70,7 +70,7 @@ pub enum Region {
 #[derive(Clone)]
 pub struct MaplestoryApi {
     pub(crate) region: Region,
-    pub(crate) api_key: String,
+    pub(crate) api_key: Option<String>,
     pub(crate) origin: String,
 }
 
@@ -93,13 +93,15 @@ impl MaplestoryApi {
             Region::MSEA => "maplestorysea",
         };
 
-        let response = reqwest::Client::new()
+        let mut request = reqwest::Client::new()
             .get(format!("{origin}/{service}/{endpoint}"))
-            .header(API_KEY_HEADER_NAME, &self.api_key)
-            .query(&query_params)
-            .send()
-            .await
-            .or(Err(ApiError::SendRequestError))?;
+            .query(&query_params);
+
+        if let Some(api_key) = &self.api_key {
+            request = request.header(API_KEY_HEADER_NAME, api_key);
+        }
+
+        let response = request.send().await.or(Err(ApiError::SendRequestError))?;
 
         if response.status() != reqwest::StatusCode::OK {
             return Err(response
@@ -622,21 +624,9 @@ impl MaplestoryApi {
 ///
 /// `region` represents the region(KMS/MSEA). Default is [`Region::KMS`].
 ///
-/// `api_key` is required to access [NEXON Open API](https://openapi.nexon.com/).
+/// `api_key` is required to access [NEXON Open API](https://openapi.nexon.com/). If `None`, "x-nxopen-api-key" header will not be included in API request.
 ///
 /// `origin` indicates the base URL of maplestory API server. If you want [Official API server](https://open.api.nexon.com)(default), leave this field as `None`. If you want proxy server, take a look an example at [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
-///
-/// # Panics
-///
-/// `build()` will panic if `api_key` is not provided.
-///
-/// ```should_panic
-/// use maplestory::prelude::*;
-///
-/// # fn main() {
-/// let api = MaplestoryApi::builder().build();
-/// # }
-/// ```
 ///
 /// # Examples
 ///
@@ -686,9 +676,7 @@ impl MaplestoryApiBuilder {
     pub fn build(self) -> MaplestoryApi {
         let region = self.region.unwrap_or(Region::KMS);
 
-        let api_key = self
-            .api_key
-            .unwrap_or_else(|| panic!("api_key is required"));
+        let api_key = self.api_key;
 
         let origin = self
             .origin

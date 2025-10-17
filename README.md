@@ -66,7 +66,7 @@ struct MaplestoryApi {
 
 `MaplestoryApi` consists of 3 fields:
 - `region`: Represents the region such as KMS, MSEA. Default is `Region::KMS`.
-- `api_key`(required): Can be obtained from https://openapi.nexon.com/.
+- `api_key`: Can be obtained from https://openapi.nexon.com/.
 - `origin`: Default is "https://open.api.nexon.com". Or you can use any proxy server instead. For an example, visit [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
 
 ## Schemas
