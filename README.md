@@ -6,7 +6,7 @@ easy-to-use maplestory API wrapper for Rust
 
 ## Regional Support
 
-Currently, this crate is available on [KMS](https://maplestory.nexon.com/) and [MSEA](https://www.maplesea.com/).  \
+Currently, this crate is available on [KMS](https://maplestory.nexon.com/), [MSEA](https://www.maplesea.com/) and [TMS](https://maplestory.beanfun.com/).  \
 Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once NEXON provides official APIs for those regions.
 
 ## Example
@@ -22,7 +22,7 @@ So your `Cargo.toml` would look like:
 
 ```toml
 [dependencies]
-maplestory = { version = "1.1.1" }
+maplestory = { version = "1.2.1" }
 tokio = { version = "1.48.0", features = ["full"] }
 ```
 
@@ -65,13 +65,13 @@ struct MaplestoryApi {
 ```
 
 `MaplestoryApi` consists of 3 fields:
-- `region`: Represents the region such as KMS, MSEA. Default is `Region::KMS`.
+- `region`: Represents the region(KMS/MSEA/TMS). Default is `Region::KMS`.
 - `api_key`: Can be obtained from https://openapi.nexon.com/.
 - `origin`: Default is "https://open.api.nexon.com". Or you can use any proxy server instead. For an example, visit [nexon-open-api-proxy](https://github.com/psvm203/nexon-open-api-proxy).
 
 ## Schemas
 
-For schema descriptions, please refer to [KMS Docs](https://openapi.nexon.com/game/maplestory/) or [MSEA Docs](https://openapi.nexon.com/game/maplestorysea/).  \
+For schema descriptions, please refer to [KMS Docs](https://openapi.nexon.com/game/maplestory/), [MSEA Docs](https://openapi.nexon.com/game/maplestorysea/) or [TMS Docs](https://openapi.nexon.com/game/maplestorytw/).  \
 When the official documentation differs from the actual API response structure, schemas are based on the actual API responses.
 
 Since API responses are in JSON format, their values are nullable.  \
@@ -108,7 +108,7 @@ Other fields are not null in any case.
 
 ## API
 
-|API|Description|KMS|MSEA|
+|API|Description|KMS|MSEA/TMS|
 |-|-|:-:|:-:|
 |get_character_list|Retrieve list of characters in account|✅|❌|
 |get_user_achievement|Retrieve user achievement information|✅|❌|

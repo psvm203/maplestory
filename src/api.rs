@@ -65,6 +65,7 @@ const API_KEY_HEADER_NAME: &str = "x-nxopen-api-key";
 pub enum Region {
     KMS,
     MSEA,
+    TMS,
 }
 
 #[derive(Clone)]
@@ -91,6 +92,7 @@ impl MaplestoryApi {
         let service = match self.region {
             Region::KMS => "maplestory",
             Region::MSEA => "maplestorysea",
+            Region::TMS => "maplestorytw",
         };
 
         let mut request = reqwest::Client::new()
@@ -626,7 +628,7 @@ impl MaplestoryApi {
 
 /// Generate [`MaplestoryApi`] using Builder Pattern.
 ///
-/// `region` represents the region(KMS/MSEA). Default is [`Region::KMS`].
+/// `region` represents the region(KMS/MSEA/TMS). Default is [`Region::KMS`].
 ///
 /// `api_key` is required to access [NEXON Open API](https://openapi.nexon.com/). If `None`, "x-nxopen-api-key" header will not be included in API request.
 ///
