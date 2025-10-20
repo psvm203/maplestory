@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use std::fmt::Display;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Eq, PartialEq)]
 pub enum ApiError {
     #[serde(rename = "OPENAPI00001")]
     InternalServerError,
