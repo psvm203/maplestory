@@ -7,7 +7,7 @@ easy-to-use maplestory API wrapper for Rust
 ## Regional Support
 
 Currently, this crate is available on [KMS](https://maplestory.nexon.com/), [MSEA](https://www.maplesea.com/) and [TMS](https://maplestory.beanfun.com/).  \
-Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once NEXON provides official APIs for those regions.
+Other regions like [GMS](https://www.nexon.com/maplestory/) will be supported once NEXON provides official API for those regions.
 
 ## Example
 
@@ -22,7 +22,7 @@ So your `Cargo.toml` would look like:
 
 ```toml
 [dependencies]
-maplestory = { version = "1.2.1" }
+maplestory = { version = "1.2.2" }
 tokio = { version = "1.48.0", features = ["full"] }
 ```
 
