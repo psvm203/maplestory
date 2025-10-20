@@ -39,7 +39,7 @@ async fn get_character_level() -> Result<i64, ApiError> {
 
     let ocid = api.get_id("00월").await?.ocid;
 
-    Ok(api.get_character_basic(ocid, None).await?.character_level)
+    Ok(api.get_character_basic(ocid, None::<String>).await?.character_level)
 }
 
 #[tokio::main]
