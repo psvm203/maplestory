@@ -75,8 +75,9 @@ pub enum Region {
 ///         .build();
 ///
 ///     let ocid = api.get_id("00월").await?.ocid;
+///     let character_level = api.get_character_basic(ocid, Some("2025-10-20")).await?.character_level;
 ///
-///     Ok(api.get_character_basic(ocid, Some("2025-10-20")).await?.character_level)
+///     Ok(character_level)
 /// }
 ///
 /// # tokio_test::block_on(async {
