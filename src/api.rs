@@ -63,6 +63,29 @@ pub enum Region {
     TMS,
 }
 
+/// Examples
+///
+/// ```rust
+/// use maplestory::prelude::*;
+///
+/// async fn get_character_level() -> Result<i64, ApiError> {
+///     let api = MaplestoryApi::builder()
+///         .region(Region::KMS)
+///         .api_key("YOUR_API_KEY")
+///         .build();
+///
+///     let ocid = api.get_id("00월").await?.ocid;
+///
+///     Ok(api.get_character_basic(ocid, Some("2025-10-20")).await?.character_level)
+/// }
+///
+/// # tokio_test::block_on(async {
+/// // Error occurs due to an invalid API key.
+/// // With a valid API key, you'll get `Some(281)`.
+/// assert_eq!(get_character_level().await, Err(ApiError::InvalidApiKey))
+/// # })
+/// ```
+
 #[derive(Clone)]
 pub struct MaplestoryApi {
     pub(crate) region: Region,
@@ -128,7 +151,7 @@ impl MaplestoryApi {
         self.make_request("v1/user/achievement", params!()).await
     }
 
-    pub async fn get_id<S>(&self, character_name: impl Display) -> Result<Character, ApiError> {
+    pub async fn get_id(&self, character_name: impl Display) -> Result<Character, ApiError> {
         let character_name = Some(character_name);
         self.make_request("v1/id", params!(character_name)).await
     }
